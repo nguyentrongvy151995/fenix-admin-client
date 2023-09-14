@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import RankSetting from 'src/pages/RankSetting';
+import RankSettingDetail from 'src/pages/RankSetting/detail';
 
 const Calendar = lazy(() => import('../pages/Calendar'));
 const Chart = lazy(() => import('../pages/Chart'));
@@ -16,6 +17,11 @@ const coreRoutes = [
     path: '/rank-setting',
     title: 'RankSetting',
     component: RankSetting,
+  },
+  {
+    path: '/rank-setting/:id',
+    title: 'RankSettingDetail',
+    component: RankSettingDetail,
   },
   {
     path: '/calendar',
