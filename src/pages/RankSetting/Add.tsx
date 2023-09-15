@@ -1,17 +1,24 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import Buttons from '../UiElements/Buttons';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
+import rankSettingApi from 'src/apis/rankSetting.api';
+import { inputCustom } from 'src/utils/common.css';
 
 function AddRankSetting() {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm();
-  const onSubmit = (data: any) => {
+  const { fields, remove, append } = useFieldArray({
+    control,
+    name: 'RequiredCoins',
+  });
+  const onSubmit = async (data: any) => {
     console.log(data);
+    const result = await rankSettingApi.postRankSettings(data);
+    console.log(result)
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -29,7 +36,7 @@ function AddRankSetting() {
             {...register('season', { required: true })}
             type="text"
             placeholder="Season"
-            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+            className={inputCustom}
           />
           {errors.season?.type === 'required' && (
             <p className="text-red-600 mt-2">This field is required</p>
@@ -44,7 +51,7 @@ function AddRankSetting() {
             {...register('tierName', { required: true })}
             type="text"
             placeholder="Tier Name"
-            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+            className={inputCustom}
           />
           {errors.tierName?.type === 'required' && (
             <p className="text-red-600 mt-2">This field is required</p>
@@ -57,9 +64,9 @@ function AddRankSetting() {
           </label>
           <input
             {...register('medals', { required: true })}
-            type="text"
+            type="number"
             placeholder="Season"
-            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+            className={inputCustom}
           />
           {errors.medals && (
             <p className="text-red-600 mt-2">This field is required</p>
@@ -70,51 +77,58 @@ function AddRankSetting() {
           <label className="mb-3 block text-black dark:text-white">
             RequiredCoins
           </label>
-          <div className="flex gap-2">
-            <div className="wrap-input">
-              <input
-                {...register('medals', { required: true })}
-                type="text"
-                placeholder="Season"
-                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-              />
-              {errors.medals && (
-                <p className="text-red-600 mt-2">This field is required</p>
-              )}
+          {/* dynamic */}
+          {fields.map(({ id, coin, quantity }: any, index) => (
+            <div className="flex gap-3 mb-2 items-start" key={id}>
+              <div className="">
+                <input
+                  {...register(`RequiredCoins[${index}].coin`, {
+                    required: true,
+                  })}
+                  placeholder="coin"
+                  className={inputCustom}
+                  defaultValue={coin}
+                  type="text"
+                />
+                {Array.isArray(errors.RequiredCoins) &&
+                  errors.RequiredCoins[index]?.coin && (
+                    <p className="text-red-600 mt-2">This field is required</p>
+                  )}
+              </div>
+              <div className="">
+                <input
+                  {...register(`RequiredCoins[${index}].quantity`, {
+                    required: true,
+                  })}
+                  placeholder="quantity"
+                  defaultValue={quantity}
+                  className={inputCustom}
+                  type="number"
+                />
+                {Array.isArray(errors.RequiredCoins) &&
+                  errors.RequiredCoins[index]?.quantity && (
+                    <p className="text-red-600 mt-2">This field is required</p>
+                  )}
+              </div>
+              <button
+                className="mt-3"
+                type="button"
+                onClick={() => remove(index)}
+              >
+                Remove
+              </button>
             </div>
-            <div className="wrap-input">
-              <input
-                {...register('medals', { required: true })}
-                type="text"
-                placeholder="Season"
-                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-              />
-              {errors.medals && (
-                <p className="text-red-600 mt-2">This field is required</p>
-              )}
-            </div>
-            <div className="wrap-input">
-              <input
-                {...register('medals', { required: true })}
-                type="text"
-                placeholder="Season"
-                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-              />
-              {errors.medals && (
-                <p className="text-red-600 mt-2">This field is required</p>
-              )}
-            </div>
-          </div>
+          ))}
+          {/* dynamic form field  */}
           <a
             type="submit"
             className="mt-2 cursor-pointer inline-flex items-center justify-center bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-          >Add</a>
+            onClick={() => append({})}
+          >
+            Add
+          </a>
         </div>
       </div>
-
-      {/* <a type='sumit' className="mt-2 cursor-pointer inline-flex items-center justify-center bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
-        Submit
-      </a> */}
       <input
         type="submit"
         className="mt-2 cursor-pointer inline-flex items-center justify-center bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"

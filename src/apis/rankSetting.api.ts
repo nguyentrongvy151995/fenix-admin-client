@@ -9,8 +9,12 @@ const RANK_SETTING = 'rank-setting'
 
 const rankSettingApi = {
   getRankSettings(currentPage: number = 1) {
-    return http.get<any>(RANK_SETTING + '?page=' + currentPage)
+    return http.get<any>(RANK_SETTING + '?page=' + currentPage);
   },
-}
+  postRankSettings(data: any) {
+    console.log('data', data)
+    return http.post<any>(RANK_SETTING, data);
+  },
+};
 
 export default rankSettingApi
