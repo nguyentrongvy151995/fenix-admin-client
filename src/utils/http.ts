@@ -61,7 +61,7 @@ export class Http {
           this.refreshToken = ''
           clearLS()
         }
-        return response
+        return response?.data?.data
       },
       (error: AxiosError) => {
         // Chỉ toast lỗi không phải 422 và 401

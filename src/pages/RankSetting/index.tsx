@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import rankSettingApi from "src/apis/rankSetting.api";
+import ButtonWithIcon from "../UiElements/ButtonWithIcon";
 
 function RankSetting() {
   const list = [
@@ -31,10 +34,26 @@ function RankSetting() {
       RequiredCoins: [{ coin: 'coin4', quantity: 5 }],
     },
   ];
+
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const [rankSettings, setRankSettings] = useState()
+  console.log('currentPage', currentPage);
+  const getRankSettings = async () => {
+    const data : any = await rankSettingApi.getRankSettings(currentPage)
+    setRankSettings(data)
+  }
+
+  useEffect(() => {
+    getRankSettings()
+  }, [currentPage])
+  console.log(rankSettings);
+  if(!rankSettings) return;
   return (
     <div>
       Rank Setting
-      <TableThree list={list} />
+      <ButtonWithIcon name="add new" className="mb-5 mt-5" path={`add`}/>
+      <TableThree list={rankSettings} currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
 }
@@ -42,7 +61,12 @@ function RankSetting() {
 export default RankSetting;
 
 const TableThree = (props: any) => {
+  console.log(props.list);
   const PAGE_SIZE = 10;
+  const handlePage = (page: number) => {
+    console.log('handlePage', page);
+    props.setCurrentPage(page)
+  }
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -64,9 +88,9 @@ const TableThree = (props: any) => {
             </tr>
           </thead>
           <tbody>
-            {props.list.map((item: any, index : number) => {
+            {props.list?.data.map((item: any, index : number) => {
               return (
-                <tr key={index}>
+                <tr key={item._id}>
                   <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                     <p className="text-black dark:text-white">{item.season}</p>
                   </td>
@@ -82,7 +106,7 @@ const TableThree = (props: any) => {
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
-                      <Link to={`${item.id}`} className="hover:text-primary">
+                      <Link to={`${item._id}`} className="hover:text-primary">
                         <svg
                           className="fill-current"
                           width="18"
@@ -137,7 +161,7 @@ const TableThree = (props: any) => {
         </table>
         <nav
           aria-label="Page navigation example"
-          className="flex justify-center "
+          className="flex justify-center mt-4"
         >
           <ul className="inline-flex -space-x-px text-sm mx-auto">
             <li>
@@ -148,12 +172,13 @@ const TableThree = (props: any) => {
                 Previous
               </a>
             </li>
-            {Array(Math.ceil(props.list.length / PAGE_SIZE))
+            {Array(Math.ceil(props.list.total / PAGE_SIZE))
               .fill(0)
               .map((_: any, index) => {
                 return (
                   <li key={index}>
                     <a
+                      onClick={() => handlePage(index + 1)}
                       href="#"
                       className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                     >

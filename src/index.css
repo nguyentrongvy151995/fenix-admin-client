@@ -161,3 +161,7 @@ span.flatpickr-weekday,
 [x-cloak] {
   display: none !important;
 }
+
+.text-red-600 {
+  color: rgb(220 38 38);
+}
