@@ -1,41 +1,13 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import rankSettingApi from "src/apis/rankSetting.api";
+import { MESSAGE } from "src/constants/message";
 import ButtonWithIcon from "../UiElements/ButtonWithIcon";
 
 function RankSetting() {
-  const list = [
-    {
-      id: 1,
-      season: 'name1',
-      tierName: 'tier_name1',
-      Medals: 1,
-      RequiredCoins: [{ coin: 'coin1', quantity: 5 }],
-    },
-    {
-      id: 2,
-      season: 'name1',
-      tierName: 'tier_name2',
-      Medals: 1,
-      RequiredCoins: [{ coin: 'coin2', quantity: 5 }],
-    },
-    {
-      id: 3,
-      season: 'name3',
-      tierName: 'tier_name3',
-      Medals: 1,
-      RequiredCoins: [{ coin: 'coin3', quantity: 5 }],
-    },
-    {
-      id: 4,
-      season: 'name4',
-      tierName: 'tier_name4',
-      Medals: 1,
-      RequiredCoins: [{ coin: 'coin4', quantity: 5 }],
-    },
-  ];
-
   const [currentPage, setCurrentPage] = useState(1)
+  const [isDelete, setIsDelete] = useState<Boolean>(false)
 
   const [rankSettings, setRankSettings] = useState()
   console.log('currentPage', currentPage);
@@ -45,27 +17,38 @@ function RankSetting() {
   }
 
   useEffect(() => {
-    getRankSettings()
-  }, [currentPage])
-  console.log(rankSettings);
+    getRankSettings();
+  }, [currentPage, isDelete]);
+
   if(!rankSettings) return;
   return (
     <div>
       Rank Setting
-      <ButtonWithIcon name="add new" className="mb-5 mt-5" path={`add`}/>
-      <TableThree list={rankSettings} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <ButtonWithIcon name="add new" className="mb-5 mt-5" path={`add`} />
+      <TableRankSetting
+        list={rankSettings}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        setIsDelete={setIsDelete}
+        isDelete={isDelete}
+      />
     </div>
   );
 }
 
 export default RankSetting;
 
-const TableThree = (props: any) => {
-  console.log(props.list);
+const TableRankSetting = (props: any) => {
   const PAGE_SIZE = 10;
   const handlePage = (page: number) => {
-    console.log('handlePage', page);
     props.setCurrentPage(page)
+  }
+  const handleDelete = async (id : string) => {
+    const conf = confirm(MESSAGE.ARE_SURE_DELETE);
+    if(!conf) return;
+    const result = await rankSettingApi.deleteRankSetting(id)
+    if(result) toast.success(MESSAGE.DELETED_SUCCESS)
+    props.setIsDelete(!props.isDelete);
   }
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -80,7 +63,10 @@ const TableThree = (props: any) => {
                 TierName
               </th>
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-               Medal
+                Medal
+              </th>
+              <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+                Created At
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
                 Actions
@@ -88,7 +74,7 @@ const TableThree = (props: any) => {
             </tr>
           </thead>
           <tbody>
-            {props.list?.data.map((item: any, index : number) => {
+            {props.list?.data.map((item: any, index: number) => {
               return (
                 <tr key={item._id}>
                   <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
@@ -102,6 +88,11 @@ const TableThree = (props: any) => {
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <p className="inline-flex rounded-full bg-success bg-opacity-10 py-1 px-3 text-sm font-medium text-success">
                       {item.medals}
+                    </p>
+                  </td>
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                    <p className="inline-flex rounded-full bg-success bg-opacity-10 py-1 px-3 text-sm font-medium text-success">
+                      {item.createdAt}
                     </p>
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -125,7 +116,7 @@ const TableThree = (props: any) => {
                           />
                         </svg>
                       </Link>
-                      <button className="hover:text-primary">
+                      <button className="hover:text-primary" onClick={() => handleDelete(item._id)}>
                         <svg
                           className="fill-current"
                           width="18"

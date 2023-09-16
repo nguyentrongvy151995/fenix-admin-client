@@ -1,5 +1,8 @@
 import { useForm, useFieldArray } from 'react-hook-form';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import rankSettingApi from 'src/apis/rankSetting.api';
+import { MESSAGE } from 'src/constants/message';
 import { inputCustom } from 'src/utils/common.css';
 
 function AddRankSetting() {
@@ -12,12 +15,16 @@ function AddRankSetting() {
   const { fields, remove, append } = useFieldArray({
     control,
     name: 'RequiredCoins',
+    rules: { required: true },
   });
   const onSubmit = async (data: any) => {
-    console.log(data);
     const result = await rankSettingApi.postRankSettings(data);
-    console.log(result)
+    if(result) {
+      toast.success(MESSAGE.CREATED_SUCCESS);
+    }
   };
+
+  console.log('fields', errors);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -77,6 +84,9 @@ function AddRankSetting() {
           <label className="mb-3 block text-black dark:text-white">
             RequiredCoins
           </label>
+          {errors.RequiredCoins?.root?.type === 'required' && (
+            <p className="text-red-600 mt-2">This field is required</p>
+          )}
           {/* dynamic */}
           {fields.map(({ id, coin, quantity }: any, index) => (
             <div className="flex gap-3 mb-2 items-start" key={id}>

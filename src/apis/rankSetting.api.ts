@@ -1,4 +1,3 @@
-import { AuthResponse } from 'src/types/auth.type'
 import http from 'src/utils/http'
 
 export const URL_LOGIN = 'login'
@@ -12,8 +11,16 @@ const rankSettingApi = {
     return http.get<any>(RANK_SETTING + '?page=' + currentPage);
   },
   postRankSettings(data: any) {
-    console.log('data', data)
     return http.post<any>(RANK_SETTING, data);
+  },
+  putRankSettings(id: string, data: any) {
+    return http.put<any>(RANK_SETTING + '/' + id, data);
+  },
+  getRankSetting(id: string) {
+    return http.get<any>(RANK_SETTING + '/' + id);
+  },
+  deleteRankSetting(id: string) {
+    return http.delete<any>(RANK_SETTING + '/' + id);
   },
 };
 

@@ -13,7 +13,7 @@ const Tables = lazy(() => import('../pages/Tables'));
 const Alerts = lazy(() => import('../pages/UiElements/Alerts'));
 const Buttons = lazy(() => import('../pages/UiElements/Buttons'));
 
-const coreRoutes = [
+const coreRoutes : any[] = [
   {
     path: '/rank-setting',
     title: 'RankSetting',
