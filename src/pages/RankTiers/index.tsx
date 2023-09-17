@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
-import rankSettingApi from "src/apis/rankSetting.api";
+import rankSettingApi from "src/apis/rankTier.api";
 import { MESSAGE } from "src/constants/message";
 import ButtonWithIcon from "../UiElements/ButtonWithIcon";
 

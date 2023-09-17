@@ -1,7 +1,8 @@
 import { lazy } from 'react';
-import RankSetting from 'src/pages/RankSetting';
-import AddRankSetting from 'src/pages/RankSetting/Add';
-import RankSettingDetail from 'src/pages/RankSetting/detail';
+import AddMatchSetting from 'src/pages/MatchSettings/add';
+import RankTier from 'src/pages/RankTiers';
+import AddRankTier from 'src/pages/RankTiers/Add';
+import RankTierDetail from 'src/pages/RankTiers/detail';
 
 const Calendar = lazy(() => import('../pages/Calendar'));
 const Chart = lazy(() => import('../pages/Chart'));
@@ -13,21 +14,26 @@ const Tables = lazy(() => import('../pages/Tables'));
 const Alerts = lazy(() => import('../pages/UiElements/Alerts'));
 const Buttons = lazy(() => import('../pages/UiElements/Buttons'));
 
-const coreRoutes : any[] = [
+const coreRoutes: any[] = [
   {
-    path: '/rank-setting',
-    title: 'RankSetting',
-    component: RankSetting,
+    path: '/rank-tiers',
+    title: 'RankTier',
+    component: RankTier,
   },
   {
-    path: '/rank-setting/:id',
-    title: 'RankSettingDetail',
-    component: RankSettingDetail,
+    path: '/rank-tiers/:id',
+    title: 'RankTierDetail',
+    component: RankTierDetail,
   },
   {
-    path: '/rank-setting/add',
-    title: 'RankSettingAdd',
-    component: AddRankSetting,
+    path: '/rank-tiers/add',
+    title: 'RankTierAdd',
+    component: AddRankTier,
+  },
+  {
+    path: '/match-settings/add',
+    title: 'MatchSetting',
+    component: AddMatchSetting,
   },
   {
     path: '/calendar',
