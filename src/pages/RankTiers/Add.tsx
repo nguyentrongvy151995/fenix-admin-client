@@ -15,7 +15,7 @@ function AddRankTier() {
   } = useForm();
   const { fields, remove, append } = useFieldArray({
     control,
-    name: 'RequiredCoins',
+    name: 'coins',
     rules: getRules().RequiredCoins,
   });
   const onSubmit = async (data: any) => {
@@ -77,11 +77,9 @@ function AddRankTier() {
         </div>
 
         <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-          <label className="mb-3 block text-black dark:text-white">
-            RequiredCoins
-          </label>
+          <label className="mb-3 block text-black dark:text-white">Coins</label>
           <p className="text-red-600 mt-2">
-            {errors.RequiredCoins?.root?.message as string}
+            {errors.coins?.root?.message as string}
           </p>
           {/* dynamic */}
           {fields.map(({ id, coin, quantity }: any, index) => (
@@ -89,7 +87,7 @@ function AddRankTier() {
               <div className="">
                 <input
                   {...register(
-                    `RequiredCoins[${index}].coin`,
+                    `coins[${index}].coin`,
                     getRules().RequiredCoinsItem,
                   )}
                   placeholder="coin"
@@ -97,17 +95,16 @@ function AddRankTier() {
                   defaultValue={coin}
                   type="text"
                 />
-                {Array.isArray(errors.RequiredCoins) &&
-                  errors.RequiredCoins[index]?.coin && (
-                    <p className="text-red-600 mt-2">
-                      {errors.RequiredCoins[index]?.coin}
-                    </p>
-                  )}
+                {Array.isArray(errors.coins) && errors.coins[index]?.coin && (
+                  <p className="text-red-600 mt-2">
+                    {errors.coins[index]?.coin}
+                  </p>
+                )}
               </div>
               <div className="">
                 <input
                   {...register(
-                    `RequiredCoins[${index}].quantity`,
+                    `coins[${index}].quantity`,
                     getRules().RequiredCoinsItem,
                   )}
                   placeholder="quantity"
@@ -115,8 +112,8 @@ function AddRankTier() {
                   className={inputCustom}
                   type="number"
                 />
-                {Array.isArray(errors.RequiredCoins) &&
-                  errors.RequiredCoins[index]?.quantity && (
+                {Array.isArray(errors.coins) &&
+                  errors.coins[index]?.quantity && (
                     <p className="text-red-600 mt-2">This field is required</p>
                   )}
               </div>
