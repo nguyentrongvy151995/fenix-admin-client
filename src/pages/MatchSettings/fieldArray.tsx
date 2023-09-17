@@ -20,7 +20,7 @@ export default function Fields({ control, register, setValue, getValues } : any)
             <li key={item.id}>
               <input
                 name={`test[${index}].name`}
-                ref={register()}
+                {...register(`test[${index}].name`)}
                 defaultValue={item.name}
               />
 

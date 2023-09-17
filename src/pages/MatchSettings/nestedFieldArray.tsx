@@ -15,14 +15,16 @@ export default ({ nestIndex, control, register } : any) => {
             <label>Nested Array:</label>
             <input
               name={`test[${nestIndex}].nestedArray[${k}].field1`}
-            //   ref={register({ required: true })}
+              {...register(`test[${nestIndex}].nestedArray[${k}].field1`, {
+                required: true,
+              })}
               defaultValue={item.field1}
               style={{ marginRight: '25px' }}
             />
 
             <input
               name={`test[${nestIndex}].nestedArray[${k}].field2`}
-            //   ref={register()}
+              {...register(`test[${nestIndex}].nestedArray[${k}].field2`)}
               defaultValue={item.field2}
             />
             <button type="button" onClick={() => remove(k)}>
