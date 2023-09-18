@@ -97,7 +97,7 @@ function AddRankTier() {
                 />
                 {Array.isArray(errors.coins) && errors.coins[index]?.coin && (
                   <p className="text-red-600 mt-2">
-                    {errors.coins[index]?.coin}
+                    {errors.coins[index]?.coin.message}
                   </p>
                 )}
               </div>
@@ -114,7 +114,9 @@ function AddRankTier() {
                 />
                 {Array.isArray(errors.coins) &&
                   errors.coins[index]?.quantity && (
-                    <p className="text-red-600 mt-2">This field is required</p>
+                    <p className="text-red-600 mt-2">
+                      {errors.coins[index]?.quantity.message}
+                    </p>
                   )}
               </div>
               <button

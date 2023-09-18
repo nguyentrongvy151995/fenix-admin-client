@@ -1,4 +1,3 @@
-import React from 'react';
 import { useFieldArray } from 'react-hook-form';
 
 export default ({ nestIndex, control, register } : any) => {
@@ -9,7 +8,7 @@ export default ({ nestIndex, control, register } : any) => {
 
   return (
     <div>
-      {fields.map((item : any, k) => {
+      {fields.map((item: any, k) => {
         return (
           <div key={item.id} style={{ marginLeft: 20 }}>
             <label>Nested Array:</label>
@@ -36,6 +35,7 @@ export default ({ nestIndex, control, register } : any) => {
 
       <button
         type="button"
+        className='block mx-2 my-2'
         onClick={() =>
           append({
             field1: 'field1',
