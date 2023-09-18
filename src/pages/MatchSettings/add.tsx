@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import FieldArray from './fieldArray';
 import ReactDOM from 'react-dom';
 
-import './styles.css';
+// import './styles.css';
 
 const defaultValues = {
   test: [
