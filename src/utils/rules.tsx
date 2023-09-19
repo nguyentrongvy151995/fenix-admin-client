@@ -1,5 +1,5 @@
 const commonMessage = {
-    required : 'this is required',
+    required : 'This is required field',
     minlength: 'This is the minimum number of required',
     maxlength: 'This is the maximum number of required'
 }

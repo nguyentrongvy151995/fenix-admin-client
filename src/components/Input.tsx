@@ -5,13 +5,14 @@ export default function Input({
   name,
   rules,
   type = 'text',
+  placeholder
 }: any) {
   return (
     <>
       <input
         {...register(name, rules)}
         type={type}
-        placeholder={name}
+        placeholder={placeholder}
         className={className}
       />
       <p className="text-red-600 mt-2">{errorMessage}</p>
