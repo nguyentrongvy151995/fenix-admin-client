@@ -1,7 +1,8 @@
 const commonMessage = {
     required : 'This is required field',
     minlength: 'This is the minimum number of required',
-    maxlength: 'This is the maximum number of required'
+    maxlength: 'This is the maximum number of required',
+    minOne: 'Minimum number of required is 1',
 }
 export const getRules = () => ({
   RequiredCoins: {
@@ -22,6 +23,35 @@ export const getRules = () => ({
     required: {
       value: true,
       message: commonMessage.required,
+    },
+  },
+  mainDuration: {
+    validate: validateNumberRange(1),
+  },
+  roundNo: {
+    validate: validateNumberRange(1, 5),
+  },
+  preparationTimeBeforeMatch: {
+    validate: validateNumberRange(1, 50),
+  },
+  timeRemaining: {
+    validate: validateNumberRange(1, 20),
+  },
+  position: {
+    validate: validateNumberRange(1),
+  },
+  roundName: {
+    required: {
+      value: true,
+      message: commonMessage.required,
+    },
+    maxLength: {
+      value: 20,
+      message: commonMessage.maxlength,
+    },
+    minLength: {
+      value: 1,
+      message: commonMessage.minlength,
     },
   },
   season: {
@@ -91,3 +121,18 @@ export const getRules = () => ({
     },
   },
 });
+
+
+const validateNumberRange =  (min: number, max?: number) => (value : any) => {
+  const number = parseInt(value);
+  if (isNaN(number)) {
+    return 'Please enter a number';
+  }
+  console.log(max)
+  if(!max && value < min) {
+    return `Enter a number > ${min}`;
+  }else if (number < min || number > (max as number)) {
+    return `Enter a number between ${min} and ${max}`; 
+  }
+  return true;
+};

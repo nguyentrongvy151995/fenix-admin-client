@@ -3,7 +3,8 @@ import IconDelete from "./IconDelete";
 
 const CardCollapse = ({ header, content, className, children, handleDelete }: any) => {
   const [hidden, setHiden] = useState<Boolean>(false);
-  const handleCollapse = () => {
+  const handleCollapse = (e : any) => {
+    e.preventDefault()
     setHiden(!hidden);
   };
   return (
@@ -15,9 +16,9 @@ const CardCollapse = ({ header, content, className, children, handleDelete }: an
           (!hidden ? '' : ' border-b-0')
         }
       >
-        <button className="absolute right-2 top-3" onClick={handleCollapse}>
+        <a className="absolute right-2 top-3" onClick={handleCollapse}>
           {hidden ? '+' : '-'}
-        </button>
+        </a>
         <div className="header border-b-2 py-4 px-2">{header}</div>
         {!hidden && <div className="content px-2 py-2">{children}</div>}
       </div>

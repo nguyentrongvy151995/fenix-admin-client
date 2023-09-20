@@ -1,5 +1,7 @@
 import { lazy } from 'react';
-import AddMatchSetting from 'src/pages/MatchSettings/add';
+import AddMatchSetting from 'src/pages/MatchSettings/AddMatchSetting';
+import DetailMatchSetting from 'src/pages/MatchSettings/DetailMatchSetting';
+import ListMatchSetting from 'src/pages/MatchSettings/ListMatchSetting';
 import RankTier from 'src/pages/RankTiers';
 import AddRankTier from 'src/pages/RankTiers/Add';
 import RankTierDetail from 'src/pages/RankTiers/detail';
@@ -31,9 +33,19 @@ const coreRoutes: any[] = [
     component: AddRankTier,
   },
   {
+    path: '/match-settings',
+    title: 'MatchSetting',
+    component: ListMatchSetting,
+  },
+  {
     path: '/match-settings/add',
     title: 'MatchSetting',
     component: AddMatchSetting,
+  },
+  {
+    path: '/match-settings/:id',
+    title: 'MatchSetting',
+    component: DetailMatchSetting,
   },
   {
     path: '/calendar',
