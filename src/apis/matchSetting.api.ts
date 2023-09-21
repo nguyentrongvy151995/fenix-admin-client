@@ -7,7 +7,7 @@ export const URL_REFRESH_TOKEN = 'refresh-access-token';
 const MATCH_SETTINGS = 'match-settings';
 
 const matchSettingApi = {
-  getRankSettings(currentPage: number = 1) {
+  getMatchSettings(currentPage: number = 1) {
     return http.get<any>(MATCH_SETTINGS + '?page=' + currentPage);
   },
   postRankSettings(data: any) {
@@ -16,7 +16,7 @@ const matchSettingApi = {
   putRankSettings(id: string, data: any) {
     return http.put<any>(MATCH_SETTINGS + '/' + id, data);
   },
-  getRankSetting(id: string) {
+  getMatchSetting(id: string) {
     return http.get<any>(MATCH_SETTINGS + '/' + id);
   },
   deleteRankSetting(id: string) {

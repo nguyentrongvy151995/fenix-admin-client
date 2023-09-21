@@ -10,12 +10,10 @@ function ListMatchSetting() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isDelete, setIsDelete] = useState<Boolean>(false);
 
-  const location = useLocation()
-
-    const [matchSettings, setMatchSettings] = useState<any>();
+  const [matchSettings, setMatchSettings] = useState<any>();
   console.log('currentPage', currentPage);
   const getRankSettings = async () => {
-    const data: any = await matchSettingApi.getRankSettings(currentPage);
+    const data: any = await matchSettingApi.getMatchSettings(currentPage);
     setMatchSettings(data);
   };
 
@@ -23,12 +21,6 @@ function ListMatchSetting() {
     
     getRankSettings();
   }, [currentPage, isDelete]);
-
-  useEffect(() => {
-    if (location.state.status) {
-      toast.success(MESSAGE.CREATED_SUCCESS);
-    }
-  }, [location.state.status]);
   
   if (!matchSettings) return;
   return (
@@ -41,6 +33,7 @@ function ListMatchSetting() {
         setCurrentPage={setCurrentPage}
         setIsDelete={setIsDelete}
         isDelete={isDelete}
+        total={matchSettings.data.numberOfMatch}
       />
     </div>
   );
@@ -129,7 +122,7 @@ const TableMatchSettings = (props: any) => {
                 Previous
               </a>
             </li>
-            {/* {Array(Math.ceil(props.list.total / PAGE_SIZE))
+            {Array(Math.ceil(props.total / PAGE_SIZE))
               .fill(0)
               .map((_: any, index) => {
                 return (
@@ -137,13 +130,18 @@ const TableMatchSettings = (props: any) => {
                     <a
                       onClick={() => handlePage(index + 1)}
                       href="#"
-                      className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      className={
+                        (props.currentPage == index + 1
+                          ? 'bg-[#808082] text-[#000]'
+                          : '') +
+                        ` flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`
+                      }
                     >
                       {index + 1}
                     </a>
                   </li>
                 );
-              })} */}
+              })}
             <li>
               <a
                 href="#"

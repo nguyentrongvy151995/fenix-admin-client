@@ -21,10 +21,13 @@ const defaultValues = {
       roundName: '',
       roundType: 'WAITING',
       mainDuration: 1,
-      challenges: 1,
-      preparationTimeBeforeMatch: 23,
-      timeRemaining: 23,
+      challenges: {
+        puzzleType: 'MATCH_CALCULATION',
+      },
+      preparationTimeBeforeMatch: 1,
+      timeRemaining: 1,
       totalChests: 1,
+      totalGoldRewards: 1,
       medalRates: [
         {
           position: 1,
@@ -44,7 +47,7 @@ const ROUND_TYPE = [
 ];
 
 export default function AddMatchSetting() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [tierIds, setTierIds] = useState<any>();
   const {
     control,
@@ -63,9 +66,9 @@ export default function AddMatchSetting() {
     console.log('data---', data);
     const result = await matchSettingApi.postRankSettings(data);
     if (result) {
-      console.log(123)
-      navigate('/match-settings', {state: {status: true}, replace: true })
+      console.log(123);
       toast.success(MESSAGE.CREATED_SUCCESS);
+      navigate('/match-settings', { state: { status: true }, replace: true });
     }
   };
 
@@ -215,20 +218,17 @@ function Round({ item, key, control, register, errors }: any) {
               />
             </div>
             <div className="px-2 py-2">
-              <label className="mb-2.5 block text-black dark:text-white">
-                Challenges
-                <span className="text-meta-1">*</span>
-              </label>
-              <Input
-                name={`round[${index}].challenges`}
+              <SelectOption
+                label="Challenges"
+                options={[
+                  { name: 'MATCH CALCULATION', value: 'MATCH_CALCULATION' },
+                  { name: 'PICTURE PREDICTION', value: 'PICTURE_PREDICTION' },
+                  { name: 'PICTURE PREDICTION', value: 'PICTURE_PREDICTION' },
+                ]}
                 register={register}
-                errorMessage={
-                  Array.isArray(errors?.round) &&
-                  errors.round[index]?.challenges?.message
-                }
-                rules={getRules().preparationTimeBeforeMatch}
-                className={inputCustom}
-                placeholder="Challenges"
+                name={`round[${index}].challenges.puzzleType`}
+                rules={getRules().RequiredCoinsItem}
+                errorMessage={errors.tierId?.puzzleType?.message}
               />
             </div>
             <div className="px-2 py-2">
@@ -291,7 +291,7 @@ function Round({ item, key, control, register, errors }: any) {
               </label>
               <Input
                 type="number"
-                name={`round[${index}].totalGoldRewards`}
+                name={`round[${index}].totalChests`}
                 register={register}
                 errorMessage={
                   Array.isArray(errors?.round) &&
