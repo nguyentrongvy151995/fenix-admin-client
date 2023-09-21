@@ -16,7 +16,7 @@ function RankSetting() {
     const data : any = await rankSettingApi.getRankSettings(currentPage)
     setRankSettings(data)
   }
-
+  console.log(rankSettings)
   useEffect(() => {
     getRankSettings();
   }, [currentPage, isDelete]);

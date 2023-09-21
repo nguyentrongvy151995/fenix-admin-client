@@ -51,17 +51,17 @@ export class Http {
         const { url } = response.config
         if (url === URL_LOGIN || url === URL_REGISTER) {
           const data = response.data as AuthResponse
+          console.log('data', data);
           this.accessToken = data.data.access_token
-          this.refreshToken = data.data.refresh_token
+          // this.refreshToken = data.data.refresh_token
           setAccessTokenToLS(this.accessToken)
-          setRefreshTokenToLS(this.refreshToken)
-          setProfileToLS(data.data.user)
+          // setRefreshTokenToLS(this.refreshToken)
+          setProfileToLS({username: data.data.user})
         } else if (url === URL_LOGOUT) {
           this.accessToken = ''
-          this.refreshToken = ''
           clearLS()
         }
-        return response?.data?.data
+        return response?.data
       },
       (error: AxiosError) => {
         // Chỉ toast lỗi không phải 422 và 401
