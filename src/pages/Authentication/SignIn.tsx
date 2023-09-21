@@ -21,11 +21,7 @@ const SignIn = () => {
   const onSubmit = async ({userName, password}: any) => {
     const result = await authApi.login({userName, password})
     if(result) {
-      // setAccessTokenToLS(result?.token || "")
-      // setIsAuthenticated(true)
-      setProfile(result.data.user)
         navigate('/')
-      console.log(result);
     }else{
       toast.error('login failed')
     }

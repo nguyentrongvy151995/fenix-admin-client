@@ -9,6 +9,9 @@ import matchSettingApi from 'src/apis/matchSetting.api';
 import SelectOption from 'src/components/SelectOption';
 import { toast } from 'react-hot-toast';
 import { MESSAGE } from 'src/constants/message';
+import { useEffect, useState } from 'react';
+import rankTierApi from 'src/apis/rankTier.api';
+import { useNavigate } from 'react-router-dom';
 
 const defaultValues = {
   tierId: '',
@@ -41,6 +44,8 @@ const ROUND_TYPE = [
 ];
 
 export default function AddMatchSetting() {
+  const navigate = useNavigate()
+  const [tierIds, setTierIds] = useState<any>();
   const {
     control,
     register,
@@ -57,11 +62,21 @@ export default function AddMatchSetting() {
   const onSubmit = async (data: any) => {
     console.log('data---', data);
     const result = await matchSettingApi.postRankSettings(data);
-    console.log(result);
-    if(result){
+    if (result) {
+      console.log(123)
+      navigate('/match-settings', {state: {status: true}, replace: true })
       toast.success(MESSAGE.CREATED_SUCCESS);
     }
   };
+
+  const getRankTiers = async () => {
+    const data: any = await rankTierApi.getRankSettings();
+    setTierIds(data.data.data);
+  };
+
+  useEffect(() => {
+    getRankTiers();
+  }, []);
 
   const handleAddRound = (e: any) => {
     e.preventDefault();
@@ -80,9 +95,9 @@ export default function AddMatchSetting() {
                 <label className="mb-2.5 block text-black dark:text-white"></label>
                 <SelectOption
                   label="Tier ID"
-                  options={[
-                    { name: 'option1', value: '6503b9a774333c32c3c33003' },
-                  ]}
+                  options={tierIds?.map(function (tierID: any) {
+                    return { name: tierID.tierName, value: tierID._id };
+                  })}
                   register={register}
                   name="tierId"
                   rules={getRules().RequiredCoinsItem}

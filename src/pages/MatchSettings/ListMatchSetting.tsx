@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import matchSettingApi from 'src/apis/matchSetting.api';
 import IconDelete from 'src/components/IconDelete';
 import { MESSAGE } from 'src/constants/message';
@@ -10,7 +10,9 @@ function ListMatchSetting() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isDelete, setIsDelete] = useState<Boolean>(false);
 
-  const [matchSettings, setMatchSettings] = useState<any>();
+  const location = useLocation()
+
+    const [matchSettings, setMatchSettings] = useState<any>();
   console.log('currentPage', currentPage);
   const getRankSettings = async () => {
     const data: any = await matchSettingApi.getRankSettings(currentPage);
@@ -18,16 +20,23 @@ function ListMatchSetting() {
   };
 
   useEffect(() => {
+    
     getRankSettings();
   }, [currentPage, isDelete]);
-  console.log(matchSettings);
+
+  useEffect(() => {
+    if (location.state.status) {
+      toast.success(MESSAGE.CREATED_SUCCESS);
+    }
+  }, [location.state.status]);
+  
   if (!matchSettings) return;
   return (
     <div>
       Rank Setting
       <ButtonWithIcon name="add new" className="mb-5 mt-5" path={`add`} />
       <TableMatchSettings
-        list={matchSettings.match}
+        list={matchSettings.data.match}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         setIsDelete={setIsDelete}

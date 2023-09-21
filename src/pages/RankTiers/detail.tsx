@@ -2,13 +2,16 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import rankSettingApi from 'src/apis/rankTier.api';
 import { inputCustom } from 'src/utils/common.css';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { MESSAGE } from 'src/constants/message';
 import Input from 'src/components/Input';
 import { getRules } from 'src/utils/rules';
+import { AppContext } from 'src/contexts/app.context';
 
 function DetailRankSetting() {
+  const { profile } = useContext(AppContext);
+  console.log(profile);
   const params = useParams();
   const [rankSetting, setRankSetting] = useState<any>();
   const {
@@ -25,8 +28,8 @@ function DetailRankSetting() {
     },
   });
   const getRankSetting = async () => {
-    const data: any = await rankSettingApi.getRankSetting(params.id as string);
-    setRankSetting(data.data);
+    const result: any = await rankSettingApi.getRankSetting(params.id as string);
+    setRankSetting(result.data.data);
   };
 
   useEffect(() => {

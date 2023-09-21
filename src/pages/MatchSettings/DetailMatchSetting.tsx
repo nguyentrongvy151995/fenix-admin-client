@@ -11,6 +11,7 @@ import { toast } from 'react-hot-toast';
 import { MESSAGE } from 'src/constants/message';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import rankTierApi from 'src/apis/rankTier.api';
 
 const ROUND_TYPE = [
   { name: 'WAITING', value: 'WAITING' },
@@ -21,15 +22,24 @@ const ROUND_TYPE = [
 
 export default function DetailMatchSetting() {
   const [matchSetting, setMatchSettings] = useState<any>();
+  const [tierIds, setTierIds] = useState<any>();
   const params = useParams();
   const getMatchSetting = async () => {
     const data: any = await matchSettingApi.getRankSetting(params.id as string);
-    setMatchSettings(data);
+    setMatchSettings(data.data);
+  };
+  const getRankTiers = async () => {
+    const data: any = await rankTierApi.getRankSettings();
+    setTierIds(data.data.data);
   };
   useEffect(() => {
     getMatchSetting();
   }, []);
-  console.log('matchSetting', matchSetting);
+
+  useEffect(() => {
+    getRankTiers();
+  }, []);
+  console.log('matchSetting', tierIds);
   // if(!matchSetting) return;
   const defaultValues = {
     tierId: '23',
@@ -55,7 +65,6 @@ export default function DetailMatchSetting() {
       }),
     ],
   };
-  console.log('defaultValues', defaultValues);
   const {
     control,
     register,
@@ -71,14 +80,13 @@ export default function DetailMatchSetting() {
     },
     shouldFocusError: false,
   });
-  console.log(errors);
   const onSubmit = async (data: any) => {
     console.log('data---', data);
-    // const result = await matchSettingApi.postRankSettings(data);
-    // console.log(result);
-    // if (result) {
-    //   toast.success(MESSAGE.CREATED_SUCCESS);
-    // }
+    const result = await matchSettingApi.putRankSettings(params?.id as string, data);
+    console.log(result);
+    if (result) {
+      toast.success(MESSAGE.CREATED_SUCCESS);
+    }
   };
 
   const handleAddRound = (e: any) => {
@@ -99,16 +107,10 @@ export default function DetailMatchSetting() {
                 <SelectOption
                   defaultV={matchSetting?.tierId}
                   label="Tier ID"
-                  options={[
-                    {
-                      name: 'option1',
-                      value: '6503b9a774333c32c3c33003',
-                    },
-                    {
-                      name: 'option2',
-                      value: '6503b9b974333c32c3c33006',
-                    },
-                  ]}
+                  options={
+                    tierIds?.map(function(tierID : any) {
+                      return {name: tierID.tierName, value: tierID._id}
+                    })}
                   register={register}
                   name="tierId"
                   rules={getRules().RequiredCoinsItem}
