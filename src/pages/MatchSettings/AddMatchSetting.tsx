@@ -148,8 +148,8 @@ function Round({ item, key, control, register, errors }: any) {
             handleDelete={() => remove(index)}
           >
             <div className="px-2 py-2">
-              <label className="mb-2.5 block text-black dark:text-white">
-                Round No <span className="text-meta-1">*</span>
+              <label className="mb-2.5 block text-black dark:text-white font-semibold">
+                Round No: <span className="text-meta-1">*</span>
               </label>
               <Input
                 name={`round[${index}].roundNo`}
@@ -165,8 +165,8 @@ function Round({ item, key, control, register, errors }: any) {
             </div>
 
             <div className="px-2 py-2">
-              <label className="mb-2.5 block text-black dark:text-white">
-                Round Name <span className="text-meta-1">*</span>
+              <label className="mb-2.5 block text-black dark:text-white font-semibold">
+                Round Name: <span className="text-meta-1">*</span>
               </label>
               <Input
                 name={`round[${index}].roundName`}
@@ -194,8 +194,8 @@ function Round({ item, key, control, register, errors }: any) {
               />
             </div>
             <div className="px-2 py-2">
-              <label className="mb-2.5 block text-black dark:text-white">
-                Main Duration <span className="text-meta-1">*</span>
+              <label className="mb-2.5 block text-black dark:text-white font-semibold">
+                Main Duration: <span className="text-meta-1">*</span>
               </label>
               <Input
                 type="number"
@@ -225,9 +225,8 @@ function Round({ item, key, control, register, errors }: any) {
               />
             </div>
             <div className="px-2 py-2">
-              <label className="mb-2.5 block text-black dark:text-white">
-                Preparation TimeBefore Match
-                <span className="text-meta-1">*</span>
+              <label className="mb-2.5 block text-black dark:text-white font-semibold">
+                Preparation TimeBefore Match: <span className="text-meta-1">*</span>
               </label>
               <Input
                 name={`round[${index}].preparationTimeBeforeMatch`}
@@ -242,9 +241,8 @@ function Round({ item, key, control, register, errors }: any) {
               />
             </div>
             <div className="px-2 py-2">
-              <label className="mb-2.5 block text-black dark:text-white">
-                Time Remaining:
-                <span className="text-meta-1">*</span>
+              <label className="mb-2.5 block text-black dark:text-white font-semibold">
+                Time Remaining: <span className="text-meta-1">*</span>
               </label>
               <Input
                 type="number"
@@ -260,9 +258,8 @@ function Round({ item, key, control, register, errors }: any) {
               />
             </div>
             <div className="px-2 py-2">
-              <label className="mb-2.5 block text-black dark:text-white">
-                Total Gold Rewards:
-                <span className="text-meta-1">*</span>
+              <label className="mb-2.5 block text-black dark:text-white font-semibold">
+                Total Gold Rewards: <span className="text-meta-1">*</span>
               </label>
               <Input
                 type="number"
@@ -278,9 +275,8 @@ function Round({ item, key, control, register, errors }: any) {
               />
             </div>
             <div className="px-2 py-2">
-              <label className="mb-2.5 block text-black dark:text-white">
-                Total Chests:
-                <span className="text-meta-1">*</span>
+              <label className="mb-2.5 block text-black dark:text-white font-semibold">
+                Total Chests: <span className="text-meta-1">*</span>
               </label>
               <Input
                 type="number"
@@ -332,9 +328,8 @@ const MetaRates = ({ nestIndex, control, register, errors }: any) => {
             handleDelete={() => remove(k)}
           >
             <div className="px-2 py-2">
-              <label className="mb-2.5 block text-black dark:text-white">
-                position:
-                <span className="text-meta-1">*</span>
+              <label className="mb-2.5 block text-black dark:text-white font-semibold">
+                Position: <span className="text-meta-1">*</span>
               </label>
               <Input
                 name={`round[${nestIndex}].medalRates[${k}].position`}
@@ -350,9 +345,8 @@ const MetaRates = ({ nestIndex, control, register, errors }: any) => {
               />
             </div>
             <div className="px-2 py-2">
-              <label className="mb-2.5 block text-black dark:text-white">
-                goldToCost:
-                <span className="text-meta-1">*</span>
+              <label className="mb-2.5 block text-black dark:text-white font-semibold">
+                Gold To Cost: <span className="text-meta-1">*</span>
               </label>
               <Input
                 name={`round[${nestIndex}].medalRates[${k}].goldToCost`}
@@ -368,9 +362,8 @@ const MetaRates = ({ nestIndex, control, register, errors }: any) => {
               />
             </div>
             <div className="px-2 py-2">
-              <label className="mb-2.5 block text-black dark:text-white">
-                receivedMedals:
-                <span className="text-meta-1">*</span>
+              <label className="mb-2.5 block text-black dark:text-white font-semibold">
+                Received Medals: <span className="text-meta-1">*</span>
               </label>
               <Input
                 name={`round[${nestIndex}].medalRates[${k}].receivedMedals`}

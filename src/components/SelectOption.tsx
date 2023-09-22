@@ -22,7 +22,7 @@ export default function SelectOption({
 }) {
   return (
     <div>
-      <label className="mb-3 block text-black dark:text-white">{label}</label>
+      <label className="mb-3 block text-black dark:text-white font-semibold">{label}: <span className="text-meta-1"> *</span></label>
       <div className="relative z-20 bg-white dark:bg-form-input">
         <span className="absolute top-1/2 left-4 z-30 -translate-y-1/2">
           {/* <svg
