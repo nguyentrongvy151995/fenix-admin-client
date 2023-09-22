@@ -32,7 +32,7 @@ function App() {
         <Route path="/auth/signin" element={<SignIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
         <Route element={<DefaultLayout />}>
-          <Route index element={<ECommerce />} />
+          <Route path="/dashboard" index element={<ECommerce />} />
           {routes.map(({ path, component: Component }, index: number) => (
             <Route
               key={index}

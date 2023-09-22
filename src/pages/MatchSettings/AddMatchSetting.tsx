@@ -173,7 +173,7 @@ function Round({ item, key, control, register, errors }: any) {
 
             <div className="px-2 py-2">
               <label className="mb-2.5 block text-black dark:text-white">
-                Name <span className="text-meta-1">*</span>
+                Round Name <span className="text-meta-1">*</span>
               </label>
               <Input
                 name={`round[${index}].roundName`}

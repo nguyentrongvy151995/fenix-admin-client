@@ -19,7 +19,7 @@ const Buttons = lazy(() => import('../pages/UiElements/Buttons'));
 const coreRoutes: any[] = [
   {
     path: '/rank-tiers',
-    title: 'RankTier',
+    title: 'rank-tiers',
     component: RankTier,
   },
   {
