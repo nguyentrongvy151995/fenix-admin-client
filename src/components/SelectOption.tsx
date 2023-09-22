@@ -25,7 +25,7 @@ export default function SelectOption({
       <label className="mb-3 block text-black dark:text-white">{label}</label>
       <div className="relative z-20 bg-white dark:bg-form-input">
         <span className="absolute top-1/2 left-4 z-30 -translate-y-1/2">
-          <svg
+          {/* <svg
             width="20"
             height="20"
             viewBox="0 0 20 20"
@@ -52,11 +52,11 @@ export default function SelectOption({
                 fill="#637381"
               ></path>
             </g>
-          </svg>
+          </svg> */}
         </span>
         <select
           {...register(name, rules)}
-          className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
+          className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
         >
           {options?.map((option: any) => {
             if (defaultV == option.value)

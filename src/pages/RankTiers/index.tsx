@@ -11,12 +11,10 @@ function RankSetting() {
   const [isDelete, setIsDelete] = useState<Boolean>(false)
 
   const [rankSettings, setRankSettings] = useState<any>()
-  console.log('currentPage', currentPage);
   const getRankSettings = async () => {
     const data : any = await rankSettingApi.getRankSettings(currentPage)
     setRankSettings(data)
   }
-  console.log(rankSettings)
   useEffect(() => {
     getRankSettings();
   }, [currentPage, isDelete]);
@@ -66,9 +64,9 @@ const TableRankSetting = (props: any) => {
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                 Medal
               </th>
-              <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+              {/* <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                 Created At
-              </th>
+              </th> */}
               <th className="py-4 px-4 font-medium text-black dark:text-white">
                 Actions
               </th>
@@ -91,11 +89,11 @@ const TableRankSetting = (props: any) => {
                       {item.medals}
                     </p>
                   </td>
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  {/* <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <p className="inline-flex rounded-full bg-success bg-opacity-10 py-1 px-3 text-sm font-medium text-success">
                       {item.createdAt}
                     </p>
-                  </td>
+                  </td> */}
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
                       <Link to={`${item._id}`} className="hover:text-primary">

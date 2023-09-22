@@ -97,7 +97,7 @@ export default function AddMatchSetting() {
               <div className="w-full xl:w-1/2">
                 <label className="mb-2.5 block text-black dark:text-white"></label>
                 <SelectOption
-                  label="Tier ID"
+                  label="Tier Name"
                   options={tierIds?.map(function (tierID: any) {
                     return { name: tierID.tierName, value: tierID._id };
                   })}
@@ -139,9 +139,10 @@ function Round({ item, key, control, register, errors }: any) {
   return (
     <div className="mb-4.5">
       {fields.map((item: any, index) => {
+
         return (
           <CardCollapse
-            header="Rounds"
+            header={ `Round ${index + 1}`}
             className="round_list border border-indigo-600"
             key={item.id}
             handleDelete={() => remove(index)}

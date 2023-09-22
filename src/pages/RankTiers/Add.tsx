@@ -25,8 +25,6 @@ function AddRankTier() {
     }
   };
 
-  console.log('fields', errors);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -37,8 +35,8 @@ function AddRankTier() {
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-          <label className="mb-3 block text-black dark:text-white">
-            Season
+          <label className="mb-3 block text-black dark:text-white font-semibold">
+            Season:
           </label>
           <Input
             className={inputCustom}
@@ -50,8 +48,8 @@ function AddRankTier() {
         </div>
 
         <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-          <label className="mb-3 block text-black dark:text-white">
-            Tier Name
+          <label className="mb-3 block text-black dark:text-white font-semibold">
+            Tier Name:
           </label>
           <Input
             className={inputCustom}
@@ -63,8 +61,8 @@ function AddRankTier() {
         </div>
 
         <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-          <label className="mb-3 block text-black dark:text-white">
-            numberOfMedal
+          <label className="mb-3 block text-black dark:text-white font-semibold">
+            Number Of Medal:
           </label>
           <Input
             className={inputCustom}
@@ -77,7 +75,7 @@ function AddRankTier() {
         </div>
 
         <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-          <label className="mb-3 block text-black dark:text-white">Coins</label>
+          <label className="mb-3 block text-black dark:text-white font-semibold">Coins</label>
           <p className="text-red-600 mt-2">
             {errors.coins?.root?.message as string}
           </p>

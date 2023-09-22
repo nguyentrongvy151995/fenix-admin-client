@@ -11,7 +11,6 @@ import { AppContext } from 'src/contexts/app.context';
 
 function DetailRankSetting() {
   const { profile } = useContext(AppContext);
-  console.log(profile);
   const params = useParams();
   const [rankSetting, setRankSetting] = useState<any>();
   const {
@@ -60,8 +59,8 @@ function DetailRankSetting() {
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-          <label className="mb-3 block text-black dark:text-white">
-            Season
+          <label className="mb-3 block text-black dark:text-white font-semibold">
+            Season:
           </label>
           <Input
             className={inputCustom}
@@ -73,8 +72,8 @@ function DetailRankSetting() {
         </div>
 
         <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-          <label className="mb-3 block text-black dark:text-white">
-            Tier Name
+          <label className="mb-3 block text-black dark:text-white font-semibold">
+            Tier Name:
           </label>
           <Input
             className={inputCustom}
@@ -86,8 +85,8 @@ function DetailRankSetting() {
         </div>
 
         <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-          <label className="mb-3 block text-black dark:text-white">
-            numberOfMedal
+          <label className="mb-3 block text-black dark:text-white font-semibold">
+            Number Of Medal:
           </label>
           <Input
             className={inputCustom}
@@ -100,7 +99,7 @@ function DetailRankSetting() {
         </div>
 
         <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-          <label className="mb-3 block text-black dark:text-white">Coins</label>
+          <label className="mb-3 block text-black dark:text-white font-semibold">Coins:</label>
           {errors.coins?.root?.type === 'required' && (
             <p className="text-red-600 mt-2">This field is required</p>
           )}
