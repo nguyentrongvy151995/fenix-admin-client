@@ -69,7 +69,7 @@ export const getRules = () => ({
     },
   },
   numberOfMedal: {
-    requied: {
+    required: {
       value: true,
       message: commonMessage.required,
     },

@@ -1,5 +1,5 @@
-import { Suspense, lazy, useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Suspense, lazy, useEffect, useState, useContext } from 'react';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -9,10 +9,13 @@ import SignUp from './pages/Authentication/SignUp';
 import routes from './routes';
 import Loader from './common/Loader';
 import 'react-toastify/dist/ReactToastify.css';
+import { AppContext } from './contexts/app.context';
 
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
 function App() {
+  const { isAuthenticated } = useContext(AppContext);
+  console.log('isAuthenticated', isAuthenticated);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -29,21 +32,25 @@ function App() {
         containerClassName="overflow-auto"
       />
       <Routes>
-        <Route path="/auth/signin" element={<SignIn />} />
-        <Route path="/auth/signup" element={<SignUp />} />
-        <Route element={<DefaultLayout />}>
-          <Route path="/dashboard" index element={<ECommerce />} />
-          {routes.map(({ path, component: Component }, index: number) => (
-            <Route
-              key={index}
-              path={path}
-              element={
-                <Suspense fallback={<Loader />}>
-                  <Component />
-                </Suspense>
-              }
-            />
-          ))}
+        <Route path="/" element={<RejectedRoute />}>
+          <Route path="/auth/signin" element={<SignIn />} />
+          <Route path="/auth/signup" element={<SignUp />} />
+        </Route>
+        <Route path="/" element={<ProtectedRoute />}>
+          <Route element={<DefaultLayout />}>
+            <Route path="/" index element={<ECommerce />} />
+            {routes.map(({ path, component: Component }, index: number) => (
+              <Route
+                key={index}
+                path={path}
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <Component />
+                  </Suspense>
+                }
+              />
+            ))}
+          </Route>
         </Route>
       </Routes>
       <ToastContainer />
@@ -53,3 +60,15 @@ function App() {
 }
 
 export default App;
+
+
+function ProtectedRoute() {
+  const { isAuthenticated } = useContext(AppContext);
+  return isAuthenticated ? <Outlet /> : <Navigate to="/auth/signin" />;
+}
+
+function RejectedRoute() {
+  const { isAuthenticated } = useContext(AppContext);
+
+  return !isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+}
