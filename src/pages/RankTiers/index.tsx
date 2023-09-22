@@ -10,7 +10,7 @@ function RankSetting() {
   const [currentPage, setCurrentPage] = useState(1)
   const [isDelete, setIsDelete] = useState<Boolean>(false)
 
-  const [rankSettings, setRankSettings] = useState()
+  const [rankSettings, setRankSettings] = useState<any>()
   console.log('currentPage', currentPage);
   const getRankSettings = async () => {
     const data : any = await rankSettingApi.getRankSettings(currentPage)
@@ -27,7 +27,7 @@ function RankSetting() {
       Rank Setting
       <ButtonWithIcon name="add new" className="mb-5 mt-5" path={`add`} />
       <TableRankSetting
-        list={rankSettings}
+        list={rankSettings.data}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         setIsDelete={setIsDelete}

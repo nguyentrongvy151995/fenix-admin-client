@@ -9,6 +9,9 @@ import matchSettingApi from 'src/apis/matchSetting.api';
 import SelectOption from 'src/components/SelectOption';
 import { toast } from 'react-hot-toast';
 import { MESSAGE } from 'src/constants/message';
+import { useEffect, useState } from 'react';
+import rankTierApi from 'src/apis/rankTier.api';
+import { useNavigate } from 'react-router-dom';
 
 const defaultValues = {
   tierId: '',
@@ -18,10 +21,13 @@ const defaultValues = {
       roundName: '',
       roundType: 'WAITING',
       mainDuration: 1,
-      challenges: 1,
-      preparationTimeBeforeMatch: 23,
-      timeRemaining: 23,
+      challenges: {
+        puzzleType: 'MATCH_CALCULATION',
+      },
+      preparationTimeBeforeMatch: 1,
+      timeRemaining: 1,
       totalChests: 1,
+      totalGoldRewards: 1,
       medalRates: [
         {
           position: 1,
@@ -41,6 +47,8 @@ const ROUND_TYPE = [
 ];
 
 export default function AddMatchSetting() {
+  const navigate = useNavigate();
+  const [tierIds, setTierIds] = useState<any>();
   const {
     control,
     register,
@@ -57,11 +65,21 @@ export default function AddMatchSetting() {
   const onSubmit = async (data: any) => {
     console.log('data---', data);
     const result = await matchSettingApi.postRankSettings(data);
-    console.log(result);
-    if(result){
+    if (result) {
+      console.log(123);
       toast.success(MESSAGE.CREATED_SUCCESS);
+      navigate('/match-settings', { state: { status: true }, replace: true });
     }
   };
+
+  const getRankTiers = async () => {
+    const data: any = await rankTierApi.getRankSettings();
+    setTierIds(data.data.data);
+  };
+
+  useEffect(() => {
+    getRankTiers();
+  }, []);
 
   const handleAddRound = (e: any) => {
     e.preventDefault();
@@ -80,9 +98,9 @@ export default function AddMatchSetting() {
                 <label className="mb-2.5 block text-black dark:text-white"></label>
                 <SelectOption
                   label="Tier ID"
-                  options={[
-                    { name: 'option1', value: '6503b9a774333c32c3c33003' },
-                  ]}
+                  options={tierIds?.map(function (tierID: any) {
+                    return { name: tierID.tierName, value: tierID._id };
+                  })}
                   register={register}
                   name="tierId"
                   rules={getRules().RequiredCoinsItem}
@@ -200,20 +218,17 @@ function Round({ item, key, control, register, errors }: any) {
               />
             </div>
             <div className="px-2 py-2">
-              <label className="mb-2.5 block text-black dark:text-white">
-                Challenges
-                <span className="text-meta-1">*</span>
-              </label>
-              <Input
-                name={`round[${index}].challenges`}
+              <SelectOption
+                label="Challenges"
+                options={[
+                  { name: 'MATCH CALCULATION', value: 'MATCH_CALCULATION' },
+                  { name: 'PICTURE PREDICTION', value: 'PICTURE_PREDICTION' },
+                  { name: 'PICTURE PREDICTION', value: 'PICTURE_PREDICTION' },
+                ]}
                 register={register}
-                errorMessage={
-                  Array.isArray(errors?.round) &&
-                  errors.round[index]?.challenges?.message
-                }
-                rules={getRules().preparationTimeBeforeMatch}
-                className={inputCustom}
-                placeholder="Challenges"
+                name={`round[${index}].challenges.puzzleType`}
+                rules={getRules().RequiredCoinsItem}
+                errorMessage={errors.tierId?.puzzleType?.message}
               />
             </div>
             <div className="px-2 py-2">
@@ -276,7 +291,7 @@ function Round({ item, key, control, register, errors }: any) {
               </label>
               <Input
                 type="number"
-                name={`round[${index}].totalGoldRewards`}
+                name={`round[${index}].totalChests`}
                 register={register}
                 errorMessage={
                   Array.isArray(errors?.round) &&

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import matchSettingApi from 'src/apis/matchSetting.api';
 import IconDelete from 'src/components/IconDelete';
 import { MESSAGE } from 'src/constants/message';
@@ -13,25 +13,27 @@ function ListMatchSetting() {
   const [matchSettings, setMatchSettings] = useState<any>();
   console.log('currentPage', currentPage);
   const getRankSettings = async () => {
-    const data: any = await matchSettingApi.getRankSettings(currentPage);
+    const data: any = await matchSettingApi.getMatchSettings(currentPage);
     setMatchSettings(data);
   };
 
   useEffect(() => {
+    
     getRankSettings();
   }, [currentPage, isDelete]);
-  console.log(matchSettings);
+  
   if (!matchSettings) return;
   return (
     <div>
       Rank Setting
       <ButtonWithIcon name="add new" className="mb-5 mt-5" path={`add`} />
       <TableMatchSettings
-        list={matchSettings.match}
+        list={matchSettings.data.match}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         setIsDelete={setIsDelete}
         isDelete={isDelete}
+        total={matchSettings.data.numberOfMatch}
       />
     </div>
   );
@@ -120,7 +122,7 @@ const TableMatchSettings = (props: any) => {
                 Previous
               </a>
             </li>
-            {/* {Array(Math.ceil(props.list.total / PAGE_SIZE))
+            {Array(Math.ceil(props.total / PAGE_SIZE))
               .fill(0)
               .map((_: any, index) => {
                 return (
@@ -128,13 +130,18 @@ const TableMatchSettings = (props: any) => {
                     <a
                       onClick={() => handlePage(index + 1)}
                       href="#"
-                      className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      className={
+                        (props.currentPage == index + 1
+                          ? 'bg-[#808082] text-[#000]'
+                          : '') +
+                        ` flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`
+                      }
                     >
                       {index + 1}
                     </a>
                   </li>
                 );
-              })} */}
+              })}
             <li>
               <a
                 href="#"
