@@ -54,7 +54,7 @@ const TableMatchMaking = (props: any) => {
   const handleDelete = async (id : string) => {
     const conf = confirm(MESSAGE.ARE_SURE_DELETE);
     if(!conf) return;
-    const result = await rankSettingApi.deleteRankSetting(id)
+    const result = await matchMakingApi.deleteMatchMaking(id)
     if(result) toast.success(MESSAGE.DELETED_SUCCESS)
     props.setIsDelete(!props.isDelete);
   }
