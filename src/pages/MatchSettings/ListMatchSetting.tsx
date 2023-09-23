@@ -1,25 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Link, useSearchParams } from 'react-router-dom';
 import matchSettingApi from 'src/apis/matchSetting.api';
 import IconDelete from 'src/components/IconDelete';
 import { MESSAGE } from 'src/constants/message';
+import { AppContext } from 'src/contexts/app.context';
 import ButtonWithIcon from '../UiElements/ButtonWithIcon';
 
 function ListMatchSetting() {
   const [isDelete, setIsDelete] = useState<Boolean>(false);
+
+  const { setLoading } = useContext(AppContext);
+
 
   const [searchParams, setSearchParams] = useSearchParams()
 
   const [matchSettings, setMatchSettings] = useState<any>();
   let currentPage = Number(searchParams.get('page')) || 1;
   const getRankSettings = async () => {
+    setLoading(true);
     const data: any = await matchSettingApi.getMatchSettings(currentPage);
     setMatchSettings(data);
+    setLoading(false);
   };
 
   useEffect(() => {
-    
     getRankSettings();
   }, [currentPage, isDelete]);
   
@@ -48,15 +53,16 @@ function ListMatchSetting() {
 export default ListMatchSetting;
 
 const TableMatchSettings = (props: any) => {
+  const { setLoading } = useContext(AppContext);
+
   const PAGE_SIZE = 10;
   const handlePage = (page: number) => {
-    console.log(page)
     props.setSearchParams({page});
   };
   const handleDelete = async (id: string) => {
     const conf = confirm(MESSAGE.ARE_SURE_DELETE);
-    console.log(id)
     if (!conf) return;
+    setLoading(true);
     const result = await matchSettingApi.deleteRankSetting(id);
     if (result) toast.success(MESSAGE.DELETED_SUCCESS);
     props.setIsDelete(!props.isDelete);

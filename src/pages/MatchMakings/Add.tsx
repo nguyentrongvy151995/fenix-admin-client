@@ -1,13 +1,17 @@
+import { useContext } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import matchMakingApi from 'src/apis/matchMaking.api';
 import Input from 'src/components/Input';
 import { MESSAGE } from 'src/constants/message';
+import { AppContext } from 'src/contexts/app.context';
 import { inputCustom } from 'src/utils/common.css';
 import { getRules } from 'src/utils/rules';
 
 function AddMatchMaking() {
+  const { setLoading } = useContext(AppContext);
+
   const {
     register,
     handleSubmit,
@@ -16,8 +20,7 @@ function AddMatchMaking() {
   } = useForm();
   const navigate = useNavigate()
   const onSubmit = async (data: any) => {
-    console.log('data', data);
-    console.log('errors', errors);
+    setLoading(true);
     const result = await matchMakingApi.postMatchMakings(data);
     if(result) {
       toast.success(MESSAGE.CREATED_SUCCESS);

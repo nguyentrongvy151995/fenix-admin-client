@@ -1,19 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import matchMakingApi from 'src/apis/matchMaking.api';
 import Input from 'src/components/Input';
 import { MESSAGE } from 'src/constants/message';
+import { AppContext } from 'src/contexts/app.context';
 import { inputCustom } from 'src/utils/common.css';
 import { getRules } from 'src/utils/rules';
 
 function DeailMatchMaking() {
+  const { setLoading } = useContext(AppContext);
+
   const params = useParams();
   const navigate = useNavigate();
   const [matchMaking, setMatchMaking] = useState<any>();
   const onSubmit = async (data: any) => {
-    console.log('data', data);
+    setLoading(true)
     const result = await matchMakingApi.putMatchMakings(params?.id as string, data);
     if (result) {
       toast.success(MESSAGE.CREATED_SUCCESS);

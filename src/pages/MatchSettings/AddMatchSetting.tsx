@@ -8,9 +8,10 @@ import matchSettingApi from 'src/apis/matchSetting.api';
 import SelectOption from 'src/components/SelectOption';
 import { toast } from 'react-hot-toast';
 import { MESSAGE } from 'src/constants/message';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import rankTierApi from 'src/apis/rankTier.api';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from 'src/contexts/app.context';
 
 const defaultValues = {
   tierId: '',
@@ -46,6 +47,8 @@ const ROUND_TYPE = [
 ];
 
 export default function AddMatchSetting() {
+  const { setLoading } = useContext(AppContext);
+
   const navigate = useNavigate();
   const [tierIds, setTierIds] = useState<any>();
   const {
@@ -60,12 +63,10 @@ export default function AddMatchSetting() {
     defaultValues,
     shouldFocusError: false,
   });
-  console.log(errors);
   const onSubmit = async (data: any) => {
-    console.log('data---', data);
+    setLoading(true)
     const result = await matchSettingApi.postRankSettings(data);
     if (result) {
-      console.log(123);
       toast.success(MESSAGE.CREATED_SUCCESS);
       navigate('/match-settings', { state: { status: true }, replace: true });
     }

@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link, useSearchParams } from "react-router-dom";
 import rankSettingApi from "src/apis/rankTier.api";
 import IconDelete from "src/components/IconDelete";
 import { MESSAGE } from "src/constants/message";
+import { AppContext } from "src/contexts/app.context";
 import ButtonWithIcon from "../UiElements/ButtonWithIcon";
 
 function RankSetting() {
   const [isDelete, setIsDelete] = useState<Boolean>(false)
-
+  const { setLoading } = useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
   let currentPage = Number(searchParams.get('page')) || 1;
   const [rankSettings, setRankSettings] = useState<any>()
   const getRankSettings = async () => {
+    setLoading(true)
     const data : any = await rankSettingApi.getRankSettings(currentPage)
     setRankSettings(data)
+    setLoading(false)
   }
   useEffect(() => {
     getRankSettings();
@@ -44,6 +47,7 @@ function RankSetting() {
 export default RankSetting;
 
 const TableRankSetting = (props: any) => {
+  const { setLoading } = useContext(AppContext);
   const PAGE_SIZE = 3;
   const handlePage = (page: number) => {
     props.setSearchParams({page})
@@ -51,11 +55,11 @@ const TableRankSetting = (props: any) => {
   const handleDelete = async (id : string) => {
     const conf = confirm(MESSAGE.ARE_SURE_DELETE);
     if(!conf) return;
+    setLoading(true)
     const result = await rankSettingApi.deleteRankSetting(id)
     if(result) toast.success(MESSAGE.DELETED_SUCCESS)
     props.setIsDelete(!props.isDelete);
   }
-  console.log(props.list);
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">

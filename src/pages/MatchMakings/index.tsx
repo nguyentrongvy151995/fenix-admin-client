@@ -1,28 +1,31 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link, useSearchParams } from "react-router-dom";
 import matchMakingApi from "src/apis/matchMaking.api";
 import rankSettingApi from "src/apis/rankTier.api";
 import IconDelete from "src/components/IconDelete";
 import { MESSAGE } from "src/constants/message";
+import { AppContext } from "src/contexts/app.context";
 import ButtonWithIcon from "../UiElements/ButtonWithIcon";
 
 function MatchMakings() {
   const [isDelete, setIsDelete] = useState<Boolean>(false)
+  const { setLoading } = useContext(AppContext);
 
   const [searchParams, setSearchParams] = useSearchParams();
   let currentPage = Number(searchParams.get('page')) || 1;
   const [matchMakings, setmatchMakings] = useState<any>()
   const getmatchMakings = async () => {
+    setLoading(true)
     const data : any = await matchMakingApi.getMatchMakings(currentPage)
     setmatchMakings(data)
+    setLoading(false);
   }
   useEffect(() => {
     getmatchMakings();
   }, [currentPage, isDelete]);
 
   if(!matchMakings) return;
-  console.log(matchMakings);
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
@@ -47,18 +50,20 @@ function MatchMakings() {
 export default MatchMakings;
 
 const TableMatchMaking = (props: any) => {
+  const { setLoading } = useContext(AppContext);
+
   const PAGE_SIZE = 3;
   const handlePage = (page: number) => {
     props.setSearchParams({page})
   }
   const handleDelete = async (id : string) => {
+    setLoading(true)
     const conf = confirm(MESSAGE.ARE_SURE_DELETE);
     if(!conf) return;
     const result = await matchMakingApi.deleteMatchMaking(id)
     if(result) toast.success(MESSAGE.DELETED_SUCCESS)
     props.setIsDelete(!props.isDelete);
   }
-  console.log(props.list);
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">

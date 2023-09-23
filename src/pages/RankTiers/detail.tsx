@@ -10,7 +10,7 @@ import { getRules } from 'src/utils/rules';
 import { AppContext } from 'src/contexts/app.context';
 
 function DetailRankSetting() {
-  const { profile } = useContext(AppContext);
+  const { setLoading } = useContext(AppContext);
   const params = useParams();
   const [rankSetting, setRankSetting] = useState<any>();
   const navigate = useNavigate();
@@ -28,6 +28,7 @@ function DetailRankSetting() {
     },
   });
   const getRankSetting = async () => {
+    setLoading(true);
     const result: any = await rankSettingApi.getRankSetting(params.id as string);
     setRankSetting(result.data.data);
   };
@@ -43,9 +44,11 @@ function DetailRankSetting() {
   });
 
   const onSubmit = async (data: any) => {
+    setLoading(true);
     const result = await rankSettingApi.putRankSettings(params.id || '', data);
     if (result?.data) {
       toast.success(MESSAGE.UPDATED_SUCCESS);
+      setLoading(false);
       navigate('/rank-tiers');
     }
   };

@@ -10,12 +10,12 @@ import routes from './routes';
 import Loader from './common/Loader';
 import 'react-toastify/dist/ReactToastify.css';
 import { AppContext } from './contexts/app.context';
+import Loading from './common/Loading.tsx';
 
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
 function App() {
-  const { isAuthenticated } = useContext(AppContext);
-  console.log('isAuthenticated', isAuthenticated);
+  
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {

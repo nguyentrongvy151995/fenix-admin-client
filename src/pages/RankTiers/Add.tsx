@@ -1,9 +1,11 @@
+import { useContext } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import rankSettingApi from 'src/apis/rankTier.api';
 import Input from 'src/components/Input';
 import { MESSAGE } from 'src/constants/message';
+import { AppContext } from 'src/contexts/app.context';
 import { inputCustom } from 'src/utils/common.css';
 import { getRules } from 'src/utils/rules';
 
@@ -14,6 +16,7 @@ function AddRankTier() {
     formState: { errors },
     control,
   } = useForm();
+  const { setLoading } = useContext(AppContext);
   const navigate = useNavigate()
   const { fields, remove, append } = useFieldArray({
     control,
@@ -21,11 +24,13 @@ function AddRankTier() {
     rules: getRules().RequiredCoins,
   });
   const onSubmit = async (data: any) => {
+    setLoading(true)
     const result = await rankSettingApi.postRankSettings(data);
     if(result) {
       toast.success(MESSAGE.CREATED_SUCCESS);
       navigate('/rank-tiers');
     }
+    setLoading(false)
   };
 
   return (

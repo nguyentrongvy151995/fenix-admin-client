@@ -9,8 +9,9 @@ import SelectOption from 'src/components/SelectOption';
 import { toast } from 'react-hot-toast';
 import { MESSAGE } from 'src/constants/message';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import rankTierApi from 'src/apis/rankTier.api';
+import { AppContext } from 'src/contexts/app.context';
 
 const ROUND_TYPE = [
   { name: 'WAITING', value: 'WAITING' },
@@ -22,14 +23,18 @@ const ROUND_TYPE = [
 export default function DetailMatchSetting() {
   const [matchSetting, setMatchSettings] = useState<any>();
   const [tierIds, setTierIds] = useState<any>();
+  const { setLoading } = useContext(AppContext);
+
 
   const params = useParams();
   const navigate = useNavigate()
   const getMatchSetting = async () => {
+    setLoading(true);
     const data: any = await matchSettingApi.getMatchSetting(
       params.id as string,
     );
     setMatchSettings(data.data);
+    setLoading(false);
   };
   const getRankTiers = async () => {
     const data: any = await rankTierApi.getRankSettings();
@@ -59,6 +64,7 @@ export default function DetailMatchSetting() {
     shouldFocusError: false,
   });
   const onSubmit = async (data: any) => {
+    setLoading(true)
     const result = await matchSettingApi.putRankSettings(params?.id as string, data);
     if (result) {
       toast.success(MESSAGE.UPDATED_SUCCESS);
