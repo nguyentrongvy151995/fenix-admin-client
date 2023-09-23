@@ -22,13 +22,16 @@ function DeailMatchMaking() {
       toast.success(MESSAGE.CREATED_SUCCESS);
       navigate('/match-makings');
     }
+    setLoading(false);
   };
 
   const getMatchMaking = async () => {
+    setLoading(true);
     const result: any = await matchMakingApi.getMatchMaking(
       params.id as string,
     );
     setMatchMaking(result.data);
+    setLoading(false);
   };
 
   useEffect(() => {

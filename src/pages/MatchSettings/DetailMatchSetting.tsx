@@ -70,6 +70,7 @@ export default function DetailMatchSetting() {
       toast.success(MESSAGE.UPDATED_SUCCESS);
       navigate('/match-settings')
     }
+    setLoading(false);
   };
 
   return (
@@ -225,7 +226,6 @@ function Round({ item, key, control, register, errors }: any) {
                   Array.isArray(errors?.rounds) &&
                   errors.rounds[index]?.preparationTimeBeforeMatch?.message
                 }
-                rules={getRules().preparationTimeBeforeMatch}
                 className={inputCustom}
                 placeholder="Preparation TimeBefore Match"
               />
@@ -242,7 +242,6 @@ function Round({ item, key, control, register, errors }: any) {
                   Array.isArray(errors?.rounds) &&
                   errors.rounds[index]?.timeRemaining?.message
                 }
-                rules={getRules().timeRemaining}
                 className={inputCustom}
                 placeholder="Time Remaining"
               />
@@ -259,7 +258,6 @@ function Round({ item, key, control, register, errors }: any) {
                   Array.isArray(errors?.rounds) &&
                   errors.rounds[index]?.totalGoldRewards?.message
                 }
-                rules={getRules().RequiredCoinsItem}
                 className={inputCustom}
                 placeholder="Total Gold Rewards"
               />
@@ -276,7 +274,6 @@ function Round({ item, key, control, register, errors }: any) {
                   Array.isArray(errors?.rounds) &&
                   errors.rounds[index]?.totalGoldRewards?.message
                 }
-                rules={getRules().RequiredCoinsItem}
                 className={inputCustom}
                 placeholder="Total Chests"
               />

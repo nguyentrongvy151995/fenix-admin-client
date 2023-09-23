@@ -70,6 +70,7 @@ export default function AddMatchSetting() {
       toast.success(MESSAGE.CREATED_SUCCESS);
       navigate('/match-settings', { state: { status: true }, replace: true });
     }
+    setLoading(false);
   };
 
   const getRankTiers = async () => {
@@ -235,7 +236,6 @@ function Round({ item, key, control, register, errors }: any) {
                   Array.isArray(errors?.round) &&
                   errors.round[index]?.preparationTimeBeforeMatch?.message
                 }
-                rules={getRules().preparationTimeBeforeMatch}
                 className={inputCustom}
                 placeholder="Preparation TimeBefore Match"
               />
@@ -252,7 +252,6 @@ function Round({ item, key, control, register, errors }: any) {
                   Array.isArray(errors?.round) &&
                   errors.round[index]?.timeRemaining?.message
                 }
-                rules={getRules().timeRemaining}
                 className={inputCustom}
                 placeholder="Time Remaining"
               />
@@ -269,7 +268,6 @@ function Round({ item, key, control, register, errors }: any) {
                   Array.isArray(errors?.round) &&
                   errors.round[index]?.totalGoldRewards?.message
                 }
-                rules={getRules().RequiredCoinsItem}
                 className={inputCustom}
                 placeholder="Total Gold Rewards"
               />
@@ -286,7 +284,6 @@ function Round({ item, key, control, register, errors }: any) {
                   Array.isArray(errors?.round) &&
                   errors.round[index]?.totalChests?.message
                 }
-                rules={getRules().RequiredCoinsItem}
                 className={inputCustom}
                 placeholder="Total Chests"
               />
@@ -317,6 +314,10 @@ const MetaRates = ({ nestIndex, control, register, errors }: any) => {
     control,
     name: `round[${nestIndex}].medalRates`,
   });
+  useEffect(() => {
+    remove(0);
+  }, [])
+  
   return (
     <>
       {fields.map((item: any, k) => {

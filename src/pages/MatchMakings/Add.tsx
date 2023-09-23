@@ -26,6 +26,7 @@ function AddMatchMaking() {
       toast.success(MESSAGE.CREATED_SUCCESS);
       navigate('/match-makings');
     }
+    setLoading(false);
   };
 
   return (

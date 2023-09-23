@@ -31,6 +31,7 @@ function DetailRankSetting() {
     setLoading(true);
     const result: any = await rankSettingApi.getRankSetting(params.id as string);
     setRankSetting(result.data.data);
+    setLoading(false);
   };
 
   useEffect(() => {
