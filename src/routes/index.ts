@@ -1,4 +1,7 @@
 import { lazy } from 'react';
+import MatchMakings from 'src/pages/MatchMakings';
+import AddMatchMaking from 'src/pages/MatchMakings/Add';
+import DeailMatchMaking from 'src/pages/MatchMakings/detail';
 import AddMatchSetting from 'src/pages/MatchSettings/AddMatchSetting';
 import DetailMatchSetting from 'src/pages/MatchSettings/DetailMatchSetting';
 import ListMatchSetting from 'src/pages/MatchSettings/ListMatchSetting';
@@ -46,6 +49,21 @@ const coreRoutes: any[] = [
     path: '/match-settings/:id',
     title: 'MatchSetting',
     component: DetailMatchSetting,
+  },
+  {
+    path: '/match-makings',
+    title: 'MatchMakings',
+    component: MatchMakings,
+  },
+  {
+    path: '/match-makings/:id',
+    title: 'DetailMatchMaking',
+    component: DeailMatchMaking,
+  },
+  {
+    path: '/match-makings/add',
+    title: 'AddMatchMaking',
+    component: AddMatchMaking,
   },
   {
     path: '/calendar',

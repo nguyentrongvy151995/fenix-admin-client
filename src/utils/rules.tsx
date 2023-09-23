@@ -74,6 +74,12 @@ export const getRules = () => ({
       message: commonMessage.required,
     },
   },
+  tierWeight: {
+    validate: validateNumberRange(1, 100),
+  },
+  timeToUpRange: {
+    validate: validateNumberRange(1),
+  },
   email: {
     required: {
       value: true,
