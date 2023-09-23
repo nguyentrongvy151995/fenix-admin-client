@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import rankSettingApi from "src/apis/rankTier.api";
 import IconDelete from "src/components/IconDelete";
 import { MESSAGE } from "src/constants/message";
 import ButtonWithIcon from "../UiElements/ButtonWithIcon";
 
 function RankSetting() {
-  const [currentPage, setCurrentPage] = useState(1)
   const [isDelete, setIsDelete] = useState<Boolean>(false)
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  let currentPage = Number(searchParams.get('page')) || 1;
   const [rankSettings, setRankSettings] = useState<any>()
   const getRankSettings = async () => {
     const data : any = await rankSettingApi.getRankSettings(currentPage)
@@ -22,13 +23,18 @@ function RankSetting() {
   if(!rankSettings) return;
   return (
     <div>
-      Rank Setting
-      <ButtonWithIcon name="add new" className="mb-5 mt-5" path={`add`} />
+      <div className="flex justify-between items-center mb-4">
+        <span className="text-title-md2 font-semibold text-black">
+          Rank Setting
+        </span>
+        <ButtonWithIcon name="add new" className="mb-5 mt-5" path={`add`} />
+      </div>
+
       <TableRankSetting
         list={rankSettings.data}
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
         setIsDelete={setIsDelete}
+        setSearchParams={setSearchParams}
         isDelete={isDelete}
       />
     </div>
@@ -40,7 +46,7 @@ export default RankSetting;
 const TableRankSetting = (props: any) => {
   const PAGE_SIZE = 10;
   const handlePage = (page: number) => {
-    props.setCurrentPage(page)
+    props.setSearchParams({page})
   }
   const handleDelete = async (id : string) => {
     const conf = confirm(MESSAGE.ARE_SURE_DELETE);
@@ -160,8 +166,12 @@ const TableRankSetting = (props: any) => {
                   <li key={index}>
                     <a
                       onClick={() => handlePage(index + 1)}
-                      href="#"
-                      className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      className={
+                        (props.currentPage == index + 1
+                          ? 'bg-[#3b50e0] text-[#fff] border-[#3b50e0]'
+                          : '') +
+                        ' flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+                      }
                     >
                       {index + 1}
                     </a>

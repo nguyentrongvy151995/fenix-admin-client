@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import FieldArray from './fieldArray';
 import CardCollapse from 'src/components/CardCollapse';
 import { useFieldArray } from 'react-hook-form';
 import Input from 'src/components/Input';
@@ -90,7 +89,7 @@ export default function AddMatchSetting() {
       <div className="flex flex-col gap-9">
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-            <h3 className="font-medium text-black dark:text-white">Add</h3>
+            <h3 className="font-semibold text-title-md2 text-black dark:text-white">Add</h3>
           </div>
           <div className="p-6.5">
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
@@ -124,7 +123,7 @@ export default function AddMatchSetting() {
       {/* end  */}
 
       <input
-        className="lex w-full justify-center rounded bg-primary p-3 font-medium text-gray"
+        className="flex justify-center rounded bg-primary py-3 w-40 font-medium text-gray mt-4"
         type="submit"
       />
     </form>
@@ -142,7 +141,7 @@ function Round({ item, key, control, register, errors }: any) {
 
         return (
           <CardCollapse
-            header={ `Round ${index + 1}`}
+            header={`Round ${index + 1}`}
             className="round_list border border-indigo-600"
             key={item.id}
             handleDelete={() => remove(index)}
@@ -288,7 +287,7 @@ function Round({ item, key, control, register, errors }: any) {
                 register={register}
                 errorMessage={
                   Array.isArray(errors?.round) &&
-                  errors.round[index]?.totalGoldRewards?.message
+                  errors.round[index]?.totalChests?.message
                 }
                 rules={getRules().RequiredCoinsItem}
                 className={inputCustom}
@@ -296,14 +295,13 @@ function Round({ item, key, control, register, errors }: any) {
               />
             </div>
             {/* <MedalRates /> */}
+            <div className="border-2 my-5 border-stroke"></div>
+
             <MetaRates
               nestIndex={index}
               {...{ control, register }}
               errors={errors}
             />
-            <button type="button" onClick={() => remove(index)}>
-              Delete Round
-            </button>
           </CardCollapse>
         );
       })}
@@ -330,6 +328,7 @@ const MetaRates = ({ nestIndex, control, register, errors }: any) => {
             key={item.id}
             header="medalRates"
             handleDelete={() => remove(k)}
+            className={'mx-6'}
           >
             <div className="px-2 py-2">
               <label className="mb-2.5 block text-black dark:text-white">
@@ -391,7 +390,7 @@ const MetaRates = ({ nestIndex, control, register, errors }: any) => {
       })}
       <button
         type="button"
-        className="flex mt-2 justify-center rounded bg-primary p-3 font-medium text-gray mb-2"
+        className="flex mt-2 justify-center rounded bg-primary p-3 font-medium text-gray mb-2 mx-6"
         onClick={() => append({})}
       >
         Add MetalRates

@@ -1,9 +1,9 @@
 export default function IconDelete() {
     return (
       <svg
-        className="fill-current"
-        width="18"
-        height="18"
+        className="fill-[#c62e2e]"
+        width="30"
+        height="30"
         viewBox="0 0 18 18"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

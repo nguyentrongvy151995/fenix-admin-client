@@ -58,14 +58,18 @@ export default function SelectOption({
           {...register(name, rules)}
           className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
         >
-          {options?.map((option: any) => {
+          {options?.map((option: any, index) => {
             if (defaultV == option.value)
               return (
-                <option selected value={option.value}>
+                <option selected value={option.value} key={index}>
                   {option.name}
                 </option>
               );
-            return <option value={option.value}>{option.name}</option>;
+            return (
+              <option value={option.value} key={index}>
+                {option.name}
+              </option>
+            );
           })}
         </select>
         <span className="absolute top-1/2 right-4 z-10 -translate-y-1/2">

@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import matchSettingApi from 'src/apis/matchSetting.api';
 import IconDelete from 'src/components/IconDelete';
 import { MESSAGE } from 'src/constants/message';
 import ButtonWithIcon from '../UiElements/ButtonWithIcon';
 
 function ListMatchSetting() {
-  const [currentPage, setCurrentPage] = useState(1);
   const [isDelete, setIsDelete] = useState<Boolean>(false);
 
+  const [searchParams, setSearchParams] = useSearchParams()
+
   const [matchSettings, setMatchSettings] = useState<any>();
-  console.log('currentPage', currentPage);
+  let currentPage = Number(searchParams.get('page')) || 1;
   const getRankSettings = async () => {
     const data: any = await matchSettingApi.getMatchSettings(currentPage);
     setMatchSettings(data);
@@ -25,12 +26,17 @@ function ListMatchSetting() {
   if (!matchSettings) return;
   return (
     <div>
-      Rank Setting
-      <ButtonWithIcon name="add new" className="mb-5 mt-5" path={`add`} />
+      <div className="flex justify-between items-center mb-4">
+        <span className="text-title-md2 font-semibold text-black">
+          Rank Setting
+        </span>
+        <ButtonWithIcon name="add new" className="mb-5 mt-5" path={`add`} />
+      </div>
+
       <TableMatchSettings
         list={matchSettings.data.match}
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
+        setSearchParams={setSearchParams}
         setIsDelete={setIsDelete}
         isDelete={isDelete}
         total={matchSettings.data.numberOfMatch}
@@ -44,7 +50,8 @@ export default ListMatchSetting;
 const TableMatchSettings = (props: any) => {
   const PAGE_SIZE = 10;
   const handlePage = (page: number) => {
-    props.setCurrentPage(page);
+    console.log(page)
+    props.setSearchParams({page});
   };
   const handleDelete = async (id: string) => {
     const conf = confirm(MESSAGE.ARE_SURE_DELETE);
@@ -56,6 +63,7 @@ const TableMatchSettings = (props: any) => {
   };
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
           <thead>
@@ -145,7 +153,7 @@ const TableMatchSettings = (props: any) => {
                       href="#"
                       className={
                         (props.currentPage == index + 1
-                          ? 'bg-[#808082] text-[#000]'
+                          ? 'bg-[#3b50e0] text-[#fff] border-[#3b50e0]'
                           : '') +
                         ` flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`
                       }

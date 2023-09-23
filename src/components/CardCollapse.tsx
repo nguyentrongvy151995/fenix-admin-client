@@ -12,25 +12,25 @@ const CardCollapse = ({ header, content, className, children, handleDelete }: an
       <div
         className={
           className +
-          ' w-full relative border-indigo-600 border mb-2 rounded-md'
+          ' w-full relative border-indigo-600 border-stroke border mb-2 rounded-md'
         }
       >
         <a
-          className="absolute right-2 top-3 cursor-pointer caret-transparent text-[32px]"
+          className="absolute right-2 top-3 cursor-pointer caret-transparent text-[32px] text-white"
           onClick={handleCollapse}
         >
           {hidden ? '+' : '-'}
         </a>
         <div
           className={
-            'header py-4 px-2 bg-[#e4e3e3]' + (!hidden ? ' border-b' : '')
+            'header py-4 px-2 bg-[#3b50e0] text-[#fff] uppercase font-semibold caret-transparent cursor-pointer' +
+            (!hidden ? ' border-b' : '')
           }
+          onClick={handleCollapse}
         >
           {header}
         </div>
-        <div className={'content px-2 py-2 ' + (hidden && 'hidden')}>
-          {children}
-        </div>
+        <div className={'content py-2 ' + (hidden && 'hidden')}>{children}</div>
       </div>
       <button className="fhover:text-primary" onClick={handleDelete}>
         <IconDelete />
