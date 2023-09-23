@@ -218,7 +218,7 @@ function Round({ item, key, control, register, errors }: any) {
             </div>
             <div className="px-2 py-2">
               <label className="mb-2.5 block text-black dark:text-white font-semibold">
-                Preparation TimeBefore Match: <span className="text-meta-1">*</span>
+                Preparation TimeBefore Match:
               </label>
               <Input
                 name={`rounds[${index}].preparationTimeBeforeMatch`}
@@ -233,7 +233,7 @@ function Round({ item, key, control, register, errors }: any) {
             </div>
             <div className="px-2 py-2">
               <label className="mb-2.5 block text-black dark:text-white font-semibold">
-                Time Remaining: <span className="text-meta-1">*</span>
+                Time Remaining:
               </label>
               <Input
                 type="number"
@@ -249,7 +249,7 @@ function Round({ item, key, control, register, errors }: any) {
             </div>
             <div className="px-2 py-2">
               <label className="mb-2.5 block text-black dark:text-white font-semibold">
-                Total Gold Rewards: <span className="text-meta-1">*</span>
+                Total Gold Rewards:
               </label>
               <Input
                 type="number"
@@ -265,7 +265,7 @@ function Round({ item, key, control, register, errors }: any) {
             </div>
             <div className="px-2 py-2">
               <label className="mb-2.5 block text-black dark:text-white font-semibold">
-                Total Chests: <span className="text-meta-1">*</span>
+                Total Chests:
               </label>
               <Input
                 type="number"
