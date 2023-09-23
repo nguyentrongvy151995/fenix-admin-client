@@ -7,8 +7,10 @@ export const URL_REFRESH_TOKEN = 'refresh-access-token'
 const RANK_TIERS = 'rank-tiers'
 
 const rankTierApi = {
-  getRankSettings(currentPage: number = 1) {
-    return http.get<any>(RANK_TIERS + '?page=' + currentPage);
+  getRankSettings(currentPage: number = 1, search?: string) {
+    return http.get<any>(
+      `${RANK_TIERS}?page=${currentPage}&search=${search ? search : ''}`,
+    );
   },
   postRankSettings(data: any) {
     return http.post<any>(RANK_TIERS, data);

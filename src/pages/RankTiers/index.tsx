@@ -1,27 +1,49 @@
 import { useContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import rankSettingApi from "src/apis/rankTier.api";
 import IconDelete from "src/components/IconDelete";
+import Input from "src/components/Input";
 import { MESSAGE } from "src/constants/message";
 import { AppContext } from "src/contexts/app.context";
+import { inputCustom } from "src/utils/common.css";
 import ButtonWithIcon from "../UiElements/ButtonWithIcon";
 
 function RankSetting() {
+  const navigate = useNavigate()
   const [isDelete, setIsDelete] = useState<Boolean>(false)
   const { setLoading } = useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
   let currentPage = Number(searchParams.get('page')) || 1;
+  let search = searchParams.get('search') || ""
+  console.log('search', search)
   const [rankSettings, setRankSettings] = useState<any>()
   const getRankSettings = async () => {
     setLoading(true)
-    const data : any = await rankSettingApi.getRankSettings(currentPage)
+    const data: any = await rankSettingApi.getRankSettings(currentPage, search);
     setRankSettings(data)
     setLoading(false)
   }
   useEffect(() => {
     getRankSettings();
-  }, [currentPage, isDelete]);
+  }, [currentPage, isDelete, search]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm()
+
+  const handleSearch = () => {
+    console.log('handleSearch');
+  }
+
+  const onSubmit = async (data: any) => {
+    console.log(data)
+    navigate(`/rank-tiers?page=${currentPage}&search=${data.search}`);
+  };
 
   if(!rankSettings) return;
   return (
@@ -32,6 +54,24 @@ function RankSetting() {
         </span>
         <ButtonWithIcon name="Add new" className="mb-5 mt-5" path={`add`} />
       </div>
+
+      <form
+        className="flex gap-2 items-center mb-3"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <span className="text-title-sm font-semibold text-black">Search</span>
+        <input
+          {...register('search')}
+          className={`rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary  ml-2`}
+          placeholder="Search Season"
+        />
+        <button
+          className="nline-flex items-center justify-center gap-2.5 rounded-full bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+          onClick={handleSearch}
+        >
+          Search
+        </button>
+      </form>
 
       <TableRankSetting
         list={rankSettings.data}

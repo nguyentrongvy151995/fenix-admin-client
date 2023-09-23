@@ -69,15 +69,17 @@ const TableMatchSettings = (props: any) => {
   };
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
-              <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11 font-semibold">
+              <th className="min-w-[220px] py-4 px-4 text-black dark:text-white xl:pl-11 font-semibold">
+                Season
+              </th>
+              <th className="min-w-[220px] py-4 px-4 text-black dark:text-white xl:pl-11 font-semibold">
                 Tier Name
               </th>
-              <th className="py-4 px-4 font-medium text-black dark:text-white font-semibold">
+              <th className="py-4 px-4 text-black dark:text-white font-semibold">
                 Actions
               </th>
             </tr>
@@ -86,6 +88,11 @@ const TableMatchSettings = (props: any) => {
             {props.list?.map((item: any, index: number) => {
               return (
                 <tr key={item._id}>
+                  <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+                    <p className="text-black dark:text-white">
+                      {item.tierId.season}
+                    </p>
+                  </td>
                   <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                     <p className="text-black dark:text-white">
                       {item.tierId.tierName}

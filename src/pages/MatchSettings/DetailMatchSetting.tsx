@@ -79,7 +79,9 @@ export default function DetailMatchSetting() {
       <div className="flex flex-col gap-9">
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-            <h3 className="font-semibold text-title-md2 text-black dark:text-white">Edit</h3>
+            <h3 className="font-semibold text-title-md2 text-black dark:text-white">
+              Edit
+            </h3>
           </div>
           <div className="p-6.5">
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
@@ -88,14 +90,13 @@ export default function DetailMatchSetting() {
                 <SelectOption
                   defaultV={matchSetting?.tierId}
                   label="Tier ID"
-                  options={
-                    tierIds?.map(function(tierID : any) {
-                      return {name: tierID.tierName, value: tierID._id}
-                    })}
+                  options={tierIds?.map(function (tierID: any) {
+                    return { name: tierID.tierName, value: tierID._id };
+                  })}
                   register={register}
                   name="tierId"
                   rules={getRules().RequiredCoinsItem}
-                  // errorMessage={errors.tierId?.message}
+                  errorMessage={errors.tierId?.message as string}
                 />
               </div>
             </div>
