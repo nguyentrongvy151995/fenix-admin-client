@@ -305,7 +305,7 @@ function Round({ item, key, control, register, errors }: any) {
         className="flex mt-2 justify-center rounded bg-primary p-3 font-medium text-gray mb-2"
         onClick={() => append({})}
       >
-        add round
+        Add Round
       </button>
     </div>
   );
