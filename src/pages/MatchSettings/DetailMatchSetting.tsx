@@ -306,7 +306,7 @@ const MetaRates = ({ nestIndex, control, register, errors }: any) => {
         return (
           <CardCollapse
             key={item.id}
-            header="medalRates"
+            header="medal Rates"
             handleDelete={() => remove(k)}
             className="mx-6"
           >
@@ -371,7 +371,7 @@ const MetaRates = ({ nestIndex, control, register, errors }: any) => {
         className="flex mt-2 justify-center rounded bg-primary p-3 font-medium text-gray mb-2 mx-6"
         onClick={() => append({})}
       >
-        Add MetalRates
+        Add Metal Rate
       </button>
     </>
   );

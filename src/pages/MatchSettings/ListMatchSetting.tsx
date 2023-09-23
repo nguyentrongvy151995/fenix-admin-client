@@ -30,7 +30,7 @@ function ListMatchSetting() {
         <span className="text-title-md2 font-semibold text-black">
           Rank Setting
         </span>
-        <ButtonWithIcon name="add new" className="mb-5 mt-5" path={`add`} />
+        <ButtonWithIcon name="Add new" className="mb-5 mt-5" path={`add`} />
       </div>
 
       <TableMatchSettings
