@@ -8,6 +8,7 @@ import { MESSAGE } from 'src/constants/message';
 import Input from 'src/components/Input';
 import { getRules } from 'src/utils/rules';
 import { AppContext } from 'src/contexts/app.context';
+import { Helmet } from 'react-helmet';
 
 function DetailRankSetting() {
   const { setLoading } = useContext(AppContext);
@@ -57,6 +58,11 @@ function DetailRankSetting() {
   if (!rankSetting) return;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Edit Rank Tier</title>
+        <link rel="canonical" href="" />
+      </Helmet>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
           <h3 className="font-medium text-black dark:text-white">Edit</h3>

@@ -12,6 +12,7 @@ import { useContext, useEffect, useState } from 'react';
 import rankTierApi from 'src/apis/rankTier.api';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from 'src/contexts/app.context';
+import { Helmet } from 'react-helmet';
 
 const defaultValues = {
   tierId: '',
@@ -87,11 +88,18 @@ export default function AddMatchSetting() {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Add Match Setting</title>
+        <link rel="canonical" href="" />
+      </Helmet>
       {/* start  */}
       <div className="flex flex-col gap-9">
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-            <h3 className="font-semibold text-title-md2 text-black dark:text-white">Add</h3>
+            <h3 className="font-semibold text-title-md2 text-black dark:text-white">
+              Add
+            </h3>
           </div>
           <div className="p-6.5">
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">

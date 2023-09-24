@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { toast } from "react-hot-toast";
 import { Link, useSearchParams } from "react-router-dom";
 import matchMakingApi from "src/apis/matchMaking.api";
@@ -66,6 +67,11 @@ const TableMatchMaking = (props: any) => {
   }
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>List Match Making</title>
+        <link rel="canonical" href="" />
+      </Helmet>
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
           <thead>

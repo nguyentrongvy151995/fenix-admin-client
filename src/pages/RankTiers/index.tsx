@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -48,6 +49,11 @@ function RankSetting() {
   if(!rankSettings) return;
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>List Rank Tier</title>
+        <link rel="canonical" href="" />
+      </Helmet>
       <div className="flex justify-between items-center mb-4">
         <span className="text-title-md2 font-semibold text-black">
           Rank Setting

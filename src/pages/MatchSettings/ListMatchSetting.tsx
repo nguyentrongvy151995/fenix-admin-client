@@ -1,14 +1,25 @@
 import { useContext, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Helmet } from 'react-helmet';
 import { toast } from 'react-hot-toast';
 import { Link, useSearchParams } from 'react-router-dom';
 import matchSettingApi from 'src/apis/matchSetting.api';
 import IconDelete from 'src/components/IconDelete';
+import ModalConfirm from 'src/components/ModalConfirm';
+import SelectOption from 'src/components/SelectOption';
 import { MESSAGE } from 'src/constants/message';
 import { AppContext } from 'src/contexts/app.context';
 import ButtonWithIcon from '../UiElements/ButtonWithIcon';
 
 function ListMatchSetting() {
   const [isDelete, setIsDelete] = useState<Boolean>(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm();
 
   const { setLoading } = useContext(AppContext);
 
@@ -31,11 +42,24 @@ function ListMatchSetting() {
   if (!matchSettings) return;
   return (
     <div>
+      {/* <ModalConfirm /> */}
       <div className="flex justify-between items-center mb-4">
         <span className="text-title-md2 font-semibold text-black">
           Rank Setting
         </span>
         <ButtonWithIcon name="Add new" className="mb-5 mt-5" path={`add`} />
+      </div>
+
+      <div className="mb-3 w-[200px]">
+        <SelectOption
+          register={register}
+          label=""
+          options={[
+            { value: '1', name: 'Select Tier ID' },
+          ]}
+          name="search"
+          rules={{required: true}}
+        />
       </div>
 
       <TableMatchSettings
@@ -53,7 +77,12 @@ function ListMatchSetting() {
 export default ListMatchSetting;
 
 const TableMatchSettings = (props: any) => {
-  const { setLoading } = useContext(AppContext);
+  const {
+    setLoading,
+    setHiddenPopupConfirm,
+    setIsConfirm,
+    isConfirm
+  } = useContext(AppContext);
 
   const PAGE_SIZE = 10;
   const handlePage = (page: number) => {
@@ -69,6 +98,11 @@ const TableMatchSettings = (props: any) => {
   };
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>List Match Setting</title>
+        <link rel="canonical" href="" />
+      </Helmet>
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
           <thead>
