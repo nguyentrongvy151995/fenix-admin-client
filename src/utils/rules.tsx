@@ -63,10 +63,6 @@ export const getRules = () => ({
       value: 100,
       message: commonMessage.maxlength,
     },
-    minLength: {
-      value: 5,
-      message: commonMessage.minlength,
-    },
   },
   numberOfMedal: {
     required: {

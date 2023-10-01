@@ -47,11 +47,18 @@ function DetailRankSetting() {
 
   const onSubmit = async (data: any) => {
     setLoading(true);
-    const result = await rankSettingApi.putRankSettings(params.id || '', data);
-    if (result?.data) {
-      toast.success(MESSAGE.UPDATED_SUCCESS);
+    try {
+      const result = await rankSettingApi.putRankSettings(
+        params.id || '',
+        data,
+      );
+      if (result?.data) {
+        toast.success(MESSAGE.UPDATED_SUCCESS);
+        setLoading(false);
+        navigate('/rank-tiers');
+      }
+    } catch (error) {
       setLoading(false);
-      navigate('/rank-tiers');
     }
   };
 
