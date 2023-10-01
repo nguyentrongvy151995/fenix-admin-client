@@ -21,17 +21,20 @@ function AddRankTier() {
   const navigate = useNavigate()
   const { fields, remove, append } = useFieldArray({
     control,
-    name: 'coins',
-    rules: getRules().RequiredCoins,
+    name: 'coins'
   });
   const onSubmit = async (data: any) => {
     setLoading(true)
-    const result = await rankSettingApi.postRankSettings(data);
-    if(result) {
-      toast.success(MESSAGE.CREATED_SUCCESS);
-      navigate('/rank-tiers');
+    try {
+      const result = await rankSettingApi.postRankSettings(data);
+      if (result) {
+        toast.success(MESSAGE.CREATED_SUCCESS);
+        navigate('/rank-tiers');
+      }
+    } catch (error) {
+      setLoading(false);
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   return (
